@@ -12,14 +12,16 @@ Wandering Trader is a store for all to find and buy products from all over the w
 
 
 ## MVP
-- Database full of products with prices, stock count, product pages
+- Database full of products with prices, stocking level, reviews, and in-depth descriptions. 
 - Users that may fill a cart of products, remove or purchase products from cart
+- User Control Panel to view order history and review purchased products.
+- Ability for users to submit support tickets and suggestions
 - Admin's ability to apply **CRUD** operations on products and users
-- Admin Inventory Page
+- Admin Control Panel to monitor product stocking levels, sitewide purchase history, and manage individual orders
 
 
 ## Stretch Goals
-- Chatbot
-- Product Recommendation Page
-- Video extentions
-- Subscriber Notifications
+- Chatbot to receive and respond to user questions.
+- Product Recommendation Page based on the individual users past interests and purchasing history
+- Video extentions to display demonstrations or extra information for products.
+- Configurable notifications for product restock, discounts or other events.
