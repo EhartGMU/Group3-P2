@@ -6,12 +6,28 @@ pr:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: windows-latest
 
 variables: #Path to folder with .sln
   solution: Project Code
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
 
 stages: 
+- stage: prepare
+  jobs:
+    - job: prepare
+      steps:
+      - task: SonarCloudPrepare@1
+        displayName: 'Prepare analysis configuration'
+        inputs:
+          SonarCloud: 'P1 Scanner'
+          organization: '210726-wvu-net-ext'
+          scannerMode: 'MSBuild'
+          projectKey: '210726-wvu-net-ext_P1-Emery-Hart'
+          projectName: 'P1-Emery-Hart'
+          extraProperties: 'sonar.exclusions=**/lib/**/*'
+
 - stage: build
   jobs:
   - job: build
