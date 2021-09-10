@@ -1,2 +1,3 @@
-# Group3-P2
-Group 3 is building their P2 in here
+# Group 3's Project 2 Project
+## Nerd Store
+
