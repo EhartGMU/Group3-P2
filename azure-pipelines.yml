@@ -6,31 +6,40 @@ pr:
 - main
 
 pool:
-  vmImage: windows-latest
+  vmImage: ubuntu-latest
 
 variables: #Path to folder with .sln
   solution: Project Code
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
 
 stages: 
-- stage: prepare
+- stage: Restore
   jobs:
-    - job: prepare
+    - job: Restore
+      steps:
+      - task: NuGetToolInstaller@1
+      
+      - task: NuGetCommand@2
+        inputs:
+          restoreSolution: '$(solution)'
+
+
+- stage: Prepare
+  jobs:
+    - job: Prepare
       steps:
       - task: SonarCloudPrepare@1
         displayName: 'Prepare analysis configuration'
         inputs:
-          SonarCloud: 'P1 Scanner'
+          SonarCloud: 'P2 Scanner'
           organization: '210726-wvu-net-ext'
           scannerMode: 'MSBuild'
-          projectKey: '210726-wvu-net-ext_P1-Emery-Hart'
-          projectName: 'P1-Emery-Hart'
+          projectKey: '210726-wvu-net-ext_Group3-P2'
+          projectName: 'Group3-P2'
           extraProperties: 'sonar.exclusions=**/lib/**/*'
 
-- stage: build
+- stage: Build
   jobs:
-  - job: build
+  - job: Build
     
     steps:
     - task: UseDotNet@2
@@ -46,3 +55,14 @@ stages:
     - script: dotnet test --configuration Release
       displayName: dotnet test
       workingDirectory: $(solution)
+
+- stage: Final
+  jobs:
+    - job: Analyze
+      steps:
+      - task: SonarCloudAnalyze@1
+        displayName: 'Run SonarCloud analysis'
+    - job: Publish
+      steps:
+      - task: SonarCloudPublish@1
+        displayName: 'Publish results on build summary'
