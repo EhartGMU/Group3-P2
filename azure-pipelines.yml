@@ -10,7 +10,7 @@ pool:
 
 variables: #Path to folders
   solution: Project Code
-  angular: Trader-App
+  angular: Trader-App/
 
 stages: 
 - stage: Restores
@@ -28,7 +28,7 @@ stages:
       steps:
       - task: Npm@1
         inputs:
-          command: 'install'
+          command: 'ci'
           workingDir: '$(angular)'
 
 - stage: Prepare
