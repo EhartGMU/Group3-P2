@@ -10,7 +10,7 @@ pool:
 
 variables: #Path to folders
   solution: Project Code
-  angular: Trader-App/
+  angular: Trader-App
 
 stages: 
 - stage: Restores
@@ -29,7 +29,7 @@ stages:
       - task: Npm@1
         inputs:
           command: 'ci'
-          workingDir: '$(angular)'
+          workingDir: $(Build.SourcesDirectory)/$(angular)'
 
 - stage: Prepare
 #Prepare the sonar cloud
