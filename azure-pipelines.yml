@@ -1,4 +1,4 @@
-# DOES NOT RUN YET
+# DOTNET DOES NOT RUN YET
 trigger:
 - main
 
@@ -8,27 +8,45 @@ pr:
 pool:
   vmImage: ubuntu-latest
 
-variables: #Path to folder with .sln
+variables: #Path to folders
   solution: Project Code
+  angular: Trader-App
 
 stages: 
-- stage: Restore
+- stage: Restores/Installs
+  #Runs NuGet and NPM restores
   jobs:
-    - job: Restore
+    - job: NuRestore
+      displayName: NuGet Restore
       steps:
       - task: NuGetToolInstaller@1
-      
       - task: NuGetCommand@2
         inputs:
           restoreSolution: '$(solution)'
-
+    - job: npmRestore
+      displayName: NPM Restore
+      steps:
+      - task: NodeTool@0
+        displayName: Install Node.js
+        inputs:
+            versionSpec: 14.x
+      - task: Npm@1
+        displayName: Install Angular
+        inputs:
+          command: "custom"
+          customCommand: "install -g @angular/cli"
+      - task: Npm@1
+        displayName: "Install/Restore npm packages"
+        inputs:
+          command: "install"
 
 - stage: Prepare
+#Prepare the sonar cloud
   jobs:
     - job: Prepare
+      displayName: 'Prepare analysis configuration'
       steps:
       - task: SonarCloudPrepare@1
-        displayName: 'Prepare analysis configuration'
         inputs:
           SonarCloud: 'P2 Scanner'
           organization: '210726-wvu-net-ext'
@@ -37,26 +55,51 @@ stages:
           projectName: 'Group3-P2'
           extraProperties: 'sonar.exclusions=**/lib/**/*'
 
-- stage: Build
+- stage: Builds
+  #Building and Testing
   jobs:
-  - job: Build
-    
-    steps:
-    - task: UseDotNet@2
-      displayName: Dotnet SDK 5
-      inputs:
-        packageType: 'sdk'
-        version: '5.x'
-    
-    - script: dotnet build --configuration Release
-      displayName: dotnet build
-      workingDirectory: $(solution)
+  # Angular Build and Test Here
+    - job: NGBuild 
+      displayName: Angular Build/Test
+      steps:
+      - task: CmdLine@2
+        displayName: Angular Build
+        inputs:
+          script: 'ng build --prod'
+      - task: CmdLine@2
+        displayName: Check Angular Violations
+        inputs:
+          script: 'ng lint'
+      - task: CmdLine@2
+        displayName: Angular Tests
+        inputs:
+          script: 'ng test --browsers=ChromeHeadless --code-coverage --watch=false'
 
-    - script: dotnet test --configuration Release
-      displayName: dotnet test
-      workingDirectory: $(solution)
+
+  # DotNet Build and Test Here
+    - job: DNBuild
+      displayName: Dotnet Build/Test
+      steps:
+      # Force dotnet 5
+      - task: UseDotNet@2
+        displayName: Dotnet SDK 5
+        inputs:
+          packageType: 'sdk'
+          version: '5.x'
+      - task: CmdLine@2
+        displayName: Dotnet Build
+        inputs:
+          script: 'dotnet build --configuration Release'
+          workingDirectory: $(solution)
+      - task: CmdLine@2
+        displayName: Dotnet Tests
+        inputs:
+          script: 'dotnet test --configuration Release'
+          workingDirectory: $(solution)
+
 
 - stage: Final
+  #Performs the Sonar Analyze and publish results
   jobs:
     - job: Analyze
       steps:
