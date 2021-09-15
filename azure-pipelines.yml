@@ -1,4 +1,4 @@
-# DOES NOT RUN YET
+# DOTNET DOES NOT RUN YET
 trigger:
 - main
 
@@ -14,6 +14,7 @@ variables: #Path to folders
 
 stages: 
 - stage: Restores
+  #Runs NuGet and NPM restores
   jobs:
     - job: NuRestore
       displayName: NuGet Restore
@@ -31,6 +32,7 @@ stages:
           workingDir: '$(angular)'
 
 - stage: Prepare
+#Prepare the sonar cloud
   jobs:
     - job: Prepare
       displayName: 'Prepare analysis configuration'
@@ -45,35 +47,39 @@ stages:
           extraProperties: 'sonar.exclusions=**/lib/**/*'
 
 - stage: Builds
+  #Building and Testing
   jobs:
-  - job: NGBuild
-    displayName: Angular Build/Test
-    steps:
-    - script: ng build
-      displayName: Angular Build
+  # Angular Build and Test Here
+    - job: NGBuild 
+      displayName: Angular Build/Test
+      steps:
+      - script: ng build
+        displayName: Angular Build
 
-    - script: ng test
-      displayName: Angular Test
-
-  - job: DNBuild
-    displayName: Dotnet Build/Test
-    steps:
-    - task: UseDotNet@2
-      displayName: Dotnet SDK 5
-      inputs:
-        packageType: 'sdk'
-        version: '5.x'
+      - script: ng test
+        displayName: Angular Test
+  # DotNet Build and Test Here
+    - job: DNBuild
+      displayName: Dotnet Build/Test
+      steps:
+      # Force dotnet 5
+      - task: UseDotNet@2
+        displayName: Dotnet SDK 5
+        inputs:
+          packageType: 'sdk'
+          version: '5.x'
     
-    - script: dotnet build --configuration Release
-      displayName: dotnet build
-      workingDirectory: $(solution)
+      - script: dotnet build --configuration Release
+        displayName: dotnet build
+        workingDirectory: $(solution)
 
-    - script: dotnet test --configuration Release
-      displayName: dotnet test
-      workingDirectory: $(solution)
+      - script: dotnet test --configuration Release
+        displayName: dotnet test
+        workingDirectory: $(solution)
 
 
 - stage: Final
+  #Performs the Sonar Analyze and publish results
   jobs:
     - job: Analyze
       steps:
