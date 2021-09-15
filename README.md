@@ -29,4 +29,4 @@ Wandering Trader is a store for all to find and buy products from all over the w
 
 
 ## Database Structure *BETA*
-![Lucid Chart](https://i.imgur.com/jrt6jf1.png)
+![Lucid Charts](https://i.imgur.com/jrt6jf1.png)
