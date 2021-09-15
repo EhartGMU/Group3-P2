@@ -8,27 +8,34 @@ pr:
 pool:
   vmImage: ubuntu-latest
 
-variables: #Path to folder with .sln
+variables: #Path to folders
   solution: Project Code
+  angular: Trader-App
 
 stages: 
 - stage: Restore
   jobs:
-    - job: Restore
+    - job: NuRestore
+      displayName: NuGet Restore
       steps:
       - task: NuGetToolInstaller@1
-      
       - task: NuGetCommand@2
         inputs:
           restoreSolution: '$(solution)'
-
+    - job: npmRestore
+      displayName: NPM Restore
+      steps:
+      - task: Npm@1
+        inputs:
+          command: 'install'
+          workingDir: '$(angular)'
 
 - stage: Prepare
   jobs:
     - job: Prepare
+      displayName: 'Prepare analysis configuration'
       steps:
       - task: SonarCloudPrepare@1
-        displayName: 'Prepare analysis configuration'
         inputs:
           SonarCloud: 'P2 Scanner'
           organization: '210726-wvu-net-ext'
@@ -39,8 +46,8 @@ stages:
 
 - stage: Build
   jobs:
-  - job: Build
-    
+  - job: DNBuild
+    displayName: Dotnet Build/Test
     steps:
     - task: UseDotNet@2
       displayName: Dotnet SDK 5
@@ -55,6 +62,11 @@ stages:
     - script: dotnet test --configuration Release
       displayName: dotnet test
       workingDirectory: $(solution)
+
+  - job: NGBuild
+    displayName: Angular Build
+    steps:
+    - script: ng build
 
 - stage: Final
   jobs:
