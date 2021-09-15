@@ -13,7 +13,7 @@ variables: #Path to folders
   angular: Trader-App
 
 stages: 
-- stage: Restores/Installs
+- stage: Restores_Installs
   #Runs NuGet and NPM restores
   jobs:
     - job: NuRestore
@@ -36,7 +36,7 @@ stages:
           command: "custom"
           customCommand: "install -g @angular/cli"
       - task: Npm@1
-        displayName: "Install/Restore npm packages"
+        displayName: "Install_Restore npm packages"
         inputs:
           command: "install"
 
