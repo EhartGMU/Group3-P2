@@ -26,10 +26,8 @@ stages:
     - job: npmRestore
       displayName: NPM Restore
       steps:
-      - task: Npm@1
-        inputs:
-          command: 'ci'
-          workingDir: $(Build.SourcesDirectory)/$(angular)'
+      - script: npm ci 
+        workingDirectory: $(angular)
 
 - stage: Prepare
 #Prepare the sonar cloud
