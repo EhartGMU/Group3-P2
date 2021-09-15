@@ -23,11 +23,11 @@ stages:
       - task: NuGetCommand@2
         inputs:
           restoreSolution: '$(solution)'
-    - job: npmRestore
-      displayName: NPM Restore
-      steps:
-      - script: npm ci 
-        workingDirectory: $(angular)
+    # - job: npmRestore
+    #   displayName: NPM Restore
+    #   steps:
+    #   - script: npm ci 
+    #     workingDirectory: $(angular)
 
 - stage: Prepare
 #Prepare the sonar cloud
