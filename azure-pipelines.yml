@@ -13,7 +13,7 @@ variables: #Path to folders
   angular: Trader-App
 
 stages: 
-- stage: Restore
+- stage: Restores
   jobs:
     - job: NuRestore
       displayName: NuGet Restore
@@ -44,8 +44,17 @@ stages:
           projectName: 'Group3-P2'
           extraProperties: 'sonar.exclusions=**/lib/**/*'
 
-- stage: Build
+- stage: Builds
   jobs:
+  - job: NGBuild
+    displayName: Angular Build/Test
+    steps:
+    - script: ng build
+      displayName: Angular Build
+
+    - script: ng test
+      displayName: Angular Test
+
   - job: DNBuild
     displayName: Dotnet Build/Test
     steps:
@@ -63,10 +72,6 @@ stages:
       displayName: dotnet test
       workingDirectory: $(solution)
 
-  - job: NGBuild
-    displayName: Angular Build
-    steps:
-    - script: ng build
 
 - stage: Final
   jobs:
