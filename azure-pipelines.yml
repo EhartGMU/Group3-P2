@@ -10,7 +10,7 @@ pool:
 
 variables: #Path to folders
   solution: 'P2-Store/*.sln'
-  angular: 'Trader-App'
+  angular: 'Trader-app'
 
 stages: 
 - stage: Restores_Installs
