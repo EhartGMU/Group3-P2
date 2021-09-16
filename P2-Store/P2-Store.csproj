@@ -3,7 +3,10 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>P2_Store</RootNamespace>
+
+
     <UserSecretsId>924fd31e-66ab-4a1a-9a61-3da7b300d68c</UserSecretsId>
+
   </PropertyGroup>
 
   <ItemGroup>
