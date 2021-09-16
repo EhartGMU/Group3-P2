@@ -37,7 +37,7 @@ namespace P2_Store
 
             services.AddDbContext<G3P2dbContext>(options =>
                 {
-                    options.UseSqlServer(Configuration.GetConnectionString("retdb"));
+                    options.UseSqlServer(Configuration.GetConnectionString("apiDB"));
 
                 });
 
