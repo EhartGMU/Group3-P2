@@ -9,8 +9,8 @@ pool:
   vmImage: ubuntu-latest
 
 variables: #Path to folders
-  solution: P2-Store
-  angular: Trader-App
+  solution: 'P2-Store/*.sln'
+  angular: 'Trader-App'
 
 stages: 
 - stage: Restores_Installs
@@ -22,7 +22,7 @@ stages:
       - task: NuGetToolInstaller@1
       - task: NuGetCommand@2
         inputs:
-          restoreSolution: '$(solution)'
+          restoreSolution: $(solution)
     - job: npmRestore
       displayName: NPM Restore
       steps:
