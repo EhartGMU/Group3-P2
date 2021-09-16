@@ -31,10 +31,12 @@ stages:
     - job: npmInstall
       displayName: NPM Install
       steps:
+      #Install Node
       - task: NodeTool@0
         displayName: Install Node.js
         inputs:
             versionSpec: 14.x
+      #Install Angular
       - task: Npm@1
         displayName: Install Angular
         inputs:
@@ -65,10 +67,10 @@ stages:
       steps:
       #Restore
       - task: Npm@1
-        displayName: "Restore npm packages"
+        displayName: Restore NPM
         inputs:
-          command: "install"
-          workingDir: $(angular)
+          command: "custom"
+          customCommand: 'npm ci'
       #Build
       - task: CmdLine@2
         displayName: Angular Build
