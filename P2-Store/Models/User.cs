@@ -32,7 +32,6 @@ namespace P2_Store.Models
             this.Email = email;
             this.DateJoined = dateJoined;
             this.IsAdmin = isAdmin;
-
         }
     }
 }

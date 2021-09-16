@@ -37,8 +37,8 @@ namespace P2_Store.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            //Newtonsoft.Json.JsonConvert.SerializeObject(_repo.getInventory(id));
-            return "Hey baby";
+            return Newtonsoft.Json.JsonConvert.SerializeObject(_repo.GetInventoryById(id));
+
         }
 
         // POST api/<InventoryController>
