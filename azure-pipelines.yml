@@ -110,6 +110,7 @@ stages:
         displayName: Dotnet Tests
         inputs:
           script: 'dotnet test --configuration Release'
+          workingDirectory: $(sDir)
   #Finial Sonar Steps
     #Analyze
     - job: Analyze
