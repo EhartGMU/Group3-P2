@@ -1,4 +1,4 @@
-# DOTNET DOES NOT RUN YET
+#ANGULAR BUILD NOT WORKING YET
 trigger:
 - main
 
@@ -9,7 +9,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables: #Path to folders
-  solution: Project Code
+  solution: P2-Store
   angular: Trader-App
 
 stages: 
@@ -35,6 +35,7 @@ stages:
         inputs:
           command: "custom"
           customCommand: "install -g @angular/cli"
+          workingDir: $(angular)
       - task: Npm@1
         displayName: "Install_Restore npm packages"
         inputs:
