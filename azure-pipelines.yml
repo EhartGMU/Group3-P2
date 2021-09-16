@@ -1,4 +1,4 @@
-# DOTNET DOES NOT RUN YET
+#ANGULAR LINT NOT FULLY IMPLEMENTED YET
 trigger:
 - main
 
@@ -9,22 +9,27 @@ pool:
   vmImage: ubuntu-latest
 
 variables: #Path to folders
-  solution: Project Code
-  angular: Trader-App
+  sDir: 'P2-Store'
+  solution: 'P2-Store/*.sln'
+  angular: 'Trader-app'
 
 stages: 
-- stage: Restores_Installs
-  #Runs NuGet and NPM restores
+- stage: Installs
+  #Runs NuGet and NPM Installs
   jobs:
-    - job: NuRestore
-      displayName: NuGet Restore
+    - job: NuInstall
+      displayName: NuGet Install-Restore
       steps:
+      #Install
       - task: NuGetToolInstaller@1
+        inputs:
+          checkLatest: true
+      #Restore
       - task: NuGetCommand@2
         inputs:
-          restoreSolution: '$(solution)'
-    - job: npmRestore
-      displayName: NPM Restore
+          restoreSolution: $(solution)
+    - job: npmInstall
+      displayName: NPM Install
       steps:
       - task: NodeTool@0
         displayName: Install Node.js
@@ -35,10 +40,6 @@ stages:
         inputs:
           command: "custom"
           customCommand: "install -g @angular/cli"
-      - task: Npm@1
-        displayName: "Install_Restore npm packages"
-        inputs:
-          command: "install"
 
 - stage: Prepare
 #Prepare the sonar cloud
@@ -62,40 +63,54 @@ stages:
     - job: NGBuild 
       displayName: Angular Build/Test
       steps:
+      #Restore
+      - task: Npm@1
+        displayName: "Restore npm packages"
+        inputs:
+          command: "install"
+          workingDir: $(angular)
+      #Build
       - task: CmdLine@2
         displayName: Angular Build
         inputs:
-          script: 'ng build --prod'
-      - task: CmdLine@2
-        displayName: Check Angular Violations
-        inputs:
-          script: 'ng lint'
+          script: 'npx ng build'
+          workingDirectory: $(angular)
+      #Check
+      # - task: CmdLine@2
+      #   displayName: Check Angular Violations
+      #   inputs:
+      #     script: 'npx ng lint'
+      #     workingDirectory: $(angular)
+      # #Test
       - task: CmdLine@2
         displayName: Angular Tests
         inputs:
-          script: 'ng test --browsers=ChromeHeadless --code-coverage --watch=false'
+          script: 'npx ng test --browsers=ChromeHeadless --code-coverage --watch=false'
+          workingDirectory: $(angular)
 
 
   # DotNet Build and Test Here
     - job: DNBuild
       displayName: Dotnet Build/Test
       steps:
-      # Force dotnet 5
+      # Force dotnet 5 again
       - task: UseDotNet@2
         displayName: Dotnet SDK 5
         inputs:
           packageType: 'sdk'
           version: '5.x'
+      #Build
       - task: CmdLine@2
         displayName: Dotnet Build
         inputs:
           script: 'dotnet build --configuration Release'
-          workingDirectory: $(solution)
+          workingDirectory: $(sDir)
+      #Test
       - task: CmdLine@2
         displayName: Dotnet Tests
         inputs:
           script: 'dotnet test --configuration Release'
-          workingDirectory: $(solution)
+          workingDirectory: $(sDir)
 
 
 - stage: Final
