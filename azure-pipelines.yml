@@ -36,12 +36,6 @@ stages:
         displayName: Install Node.js
         inputs:
             versionSpec: 14.x
-      #Install Angular
-      - task: Npm@1
-        displayName: Install Angular
-        inputs:
-          command: "custom"
-          customCommand: "install -g @angular/cli"
 
 - stage: Angular_BT
   jobs:
