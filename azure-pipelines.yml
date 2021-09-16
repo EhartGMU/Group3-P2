@@ -11,7 +11,7 @@ pool:
 variables: #Path to folders
   sDir: 'P2-Store'
   solution: 'P2-Store/*.sln'
-  angular: 'Trader-app'
+  angular: '$(Build.SourcesDirectory)/Trader-app'
 
 stages: 
 - stage: Installs
@@ -42,23 +42,8 @@ stages:
         inputs:
           command: "custom"
           customCommand: "install -g @angular/cli"
-- stage: Prepare
-#Prepare the sonar cloud
-  jobs:
-    - job: Prepare
-      displayName: 'Prepare Analysis Configuration'
-      steps:
-      - task: SonarCloudPrepare@1
-        inputs:
-          SonarCloud: 'P2 Scanner'
-          organization: '210726-wvu-net-ext'
-          scannerMode: 'MSBuild'
-          projectKey: '210726-wvu-net-ext_Group3-P2'
-          projectName: 'Group3-P2'
-          extraProperties: 'sonar.exclusions=**/lib/**/*'
 
-- stage: Build
-  #Building and Testing
+- stage: Angular_BT
   jobs:
   # Angular Build and Test Here
     - job: NGBuild 
@@ -90,11 +75,28 @@ stages:
           workingDirectory: $(angular)
 
 
+- stage: Prepare
+#Prepare the sonar cloud
+  jobs:
+    - job: Prepare
+      displayName: 'Prepare Analysis Configuration'
+      steps:
+      - task: SonarCloudPrepare@1
+        inputs:
+          SonarCloud: 'P2 Scanner'
+          organization: '210726-wvu-net-ext'
+          scannerMode: 'MSBuild'
+          projectKey: '210726-wvu-net-ext_Group3-P2'
+          projectName: 'Group3-P2'
+          extraProperties: 'sonar.exclusions=**/lib/**/*'
+
+- stage: DotNet_BT
+  jobs:
   # DotNet Build and Test Here
     - job: DNBuild
       displayName: Dotnet Build/Test
       steps:
-      # Force dotnet 5 again
+      # Force dotnet 5
       - task: UseDotNet@2
         displayName: Dotnet SDK 5
         inputs:
