@@ -24,7 +24,17 @@ namespace P2_Store.Models.Interfaces
         User AddUser(User n);
         User DeleteUser(User n);
 
-        Inventory GetIventoryById(int id);
+        Inventory GetInventoryById(int id);
+        Order GetOrderById(int id);
+        Product GetProductById(int id);
+
+        User GetUserById(int id);
+
+        void UpdateInventory(Inventory rest);
+
+        void UpdateOrder(Order rest);
+
+        void UpdateProduct(Product rest);
 
 
     }
