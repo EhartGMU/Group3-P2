@@ -66,19 +66,19 @@ stages:
       - task: CmdLine@2
         displayName: Angular Build
         inputs:
-          script: 'npx ng build --prod'
+          script: 'npx ng build'
           workingDirectory: $(angular)
       #Check
       - task: CmdLine@2
         displayName: Check Angular Violations
         inputs:
-          script: 'ng lint'
+          script: 'npx ng lint'
           workingDirectory: $(angular)
       #Test
       - task: CmdLine@2
         displayName: Angular Tests
         inputs:
-          script: 'ng test --browsers=ChromeHeadless --code-coverage --watch=false'
+          script: 'npx ng test --browsers=ChromeHeadless --code-coverage --watch=false'
           workingDirectory: $(angular)
 
 
@@ -86,10 +86,22 @@ stages:
     - job: DNBuild
       displayName: Dotnet Build/Test
       steps:
+      # Force dotnet 3
+      - task: UseDotNet@2
+        displayName: Dotnet SDK 3
+        inputs:
+          packageType: 'sdk'
+          version: '3.x'
       #Restore
       - task: NuGetCommand@2
         inputs:
           restoreSolution: $(solution)
+      # Force dotnet 5 again
+      - task: UseDotNet@2
+        displayName: Dotnet SDK 5
+        inputs:
+          packageType: 'sdk'
+          version: '5.x'
       #Build
       - task: CmdLine@2
         displayName: Dotnet Build
