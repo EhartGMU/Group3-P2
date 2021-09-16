@@ -85,6 +85,7 @@ stages:
           extraProperties: 'sonar.exclusions=**/lib/**/*'
   # DotNet Build and Test Here
     - job: DNBuild
+      dependsOn: Prepare
       displayName: Dotnet Build/Test
       steps:
       # Force dotnet 5
@@ -108,11 +109,13 @@ stages:
   #Finial Sonar Steps
     #Analyze
     - job: Analyze
+      dependsOn: DNBuild
       steps:
       - task: SonarCloudAnalyze@1
         displayName: 'Run SonarCloud analysis'
     #Publish
     - job: Publish
+      dependsOn: Analyze
       steps:
       - task: SonarCloudPublish@1
         displayName: 'Publish results on build summary'
