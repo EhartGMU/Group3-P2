@@ -72,8 +72,8 @@ stages:
 - stage: DotNet_Sonar
   jobs:
   #Prepare the sonar cloud
-    - job: Prepare
-      displayName: 'Prepare Analysis Configuration'
+    - job: Scanner
+      displayName: 'Run Sonar Analysis'
       steps:
       - task: SonarCloudPrepare@1
         inputs:
@@ -84,10 +84,6 @@ stages:
           projectName: 'Group3-P2'
           extraProperties: 'sonar.exclusions=**/lib/**/*'
   # DotNet Build and Test Here
-    - job: DNBuild
-      dependsOn: Prepare
-      displayName: Dotnet Build/Test
-      steps:
       # Force dotnet 5
       - task: UseDotNet@2
         displayName: Dotnet SDK 5
@@ -108,14 +104,8 @@ stages:
           workingDirectory: $(sDir)
   #Finial Sonar Steps
     #Analyze
-    - job: Analyze
-      dependsOn: DNBuild
-      steps:
       - task: SonarCloudAnalyze@1
         displayName: 'Run SonarCloud analysis'
     #Publish
-    - job: Publish
-      dependsOn: Analyze
-      steps:
       - task: SonarCloudPublish@1
         displayName: 'Publish results on build summary'
