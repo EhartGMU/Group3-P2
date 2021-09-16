@@ -95,12 +95,12 @@ stages:
         displayName: Dotnet Build
         inputs:
           script: 'dotnet build --configuration Release'
-          workingDirectory: $(solution)
+          workingDirectory: $(sDir)
       - task: CmdLine@2
         displayName: Dotnet Tests
         inputs:
           script: 'dotnet test --configuration Release'
-          workingDirectory: $(solution)
+          workingDirectory: $(sDir)
 
 
 - stage: Final
