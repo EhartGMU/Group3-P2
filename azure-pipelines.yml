@@ -54,6 +54,7 @@ stages:
         displayName: Restore NPM
         inputs:
           command: 'ci'
+          workingDir: '$(angular)'
       #Build
       - task: CmdLine@2
         displayName: Angular Build
