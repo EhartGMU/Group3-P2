@@ -34,9 +34,8 @@ stages:
       - task: Npm@1
         displayName: Install Angular
         inputs:
-          command: "custom"
-          customCommand: "install -g @angular/cli"
-          workingDir: $(angular)
+          command: 'install'
+          workingDir: '$(angular)'
       - task: Npm@1
         displayName: "Install_Restore npm packages"
         inputs:
