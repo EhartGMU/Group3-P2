@@ -1,4 +1,4 @@
-#ANGULAR BUILD NOT WORKING YET
+#ANGULAR LINT NOT FULLY IMPLEMENTED YET
 trigger:
 - main
 
@@ -69,12 +69,12 @@ stages:
           script: 'npx ng build'
           workingDirectory: $(angular)
       #Check
-      - task: CmdLine@2
-        displayName: Check Angular Violations
-        inputs:
-          script: 'npx ng lint'
-          workingDirectory: $(angular)
-      #Test
+      # - task: CmdLine@2
+      #   displayName: Check Angular Violations
+      #   inputs:
+      #     script: 'npx ng lint'
+      #     workingDirectory: $(angular)
+      # #Test
       - task: CmdLine@2
         displayName: Angular Tests
         inputs:
@@ -86,12 +86,12 @@ stages:
     - job: DNBuild
       displayName: Dotnet Build/Test
       steps:
-      # Force dotnet 3
+      # Force dotnet 2
       - task: UseDotNet@2
-        displayName: Dotnet SDK 3
+        displayName: Dotnet SDK 2
         inputs:
           packageType: 'sdk'
-          version: '3.x'
+          version: '2.x'
       #Restore
       - task: NuGetCommand@2
         inputs:
