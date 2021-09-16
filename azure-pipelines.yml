@@ -11,7 +11,7 @@ pool:
 variables: #Path to folders
   sDir: 'P2-Store'
   solution: 'P2-Store/*.sln'
-  angular: 'Trader-app'
+  angular: '$(Build.SourcesDirectory)/Trader-app'
 
 stages: 
 - stage: Installs
@@ -31,33 +31,13 @@ stages:
     - job: npmInstall
       displayName: NPM Install
       steps:
+      #Install Node
       - task: NodeTool@0
         displayName: Install Node.js
         inputs:
             versionSpec: 14.x
-      - task: Npm@1
-        displayName: Install Angular
-        inputs:
-          command: "custom"
-          customCommand: "install -g @angular/cli"
 
-- stage: Prepare
-#Prepare the sonar cloud
-  jobs:
-    - job: Prepare
-      displayName: 'Prepare analysis configuration'
-      steps:
-      - task: SonarCloudPrepare@1
-        inputs:
-          SonarCloud: 'P2 Scanner'
-          organization: '210726-wvu-net-ext'
-          scannerMode: 'MSBuild'
-          projectKey: '210726-wvu-net-ext_Group3-P2'
-          projectName: 'Group3-P2'
-          extraProperties: 'sonar.exclusions=**/lib/**/*'
-
-- stage: Builds
-  #Building and Testing
+- stage: Angular_BT
   jobs:
   # Angular Build and Test Here
     - job: NGBuild 
@@ -65,10 +45,10 @@ stages:
       steps:
       #Restore
       - task: Npm@1
-        displayName: "Restore npm packages"
+        displayName: Restore NPM
         inputs:
-          command: "install"
-          workingDir: $(angular)
+          command: 'ci'
+          workingDir: '$(angular)'
       #Build
       - task: CmdLine@2
         displayName: Angular Build
@@ -89,11 +69,22 @@ stages:
           workingDirectory: $(angular)
 
 
-  # DotNet Build and Test Here
-    - job: DNBuild
-      displayName: Dotnet Build/Test
+- stage: DotNet_Sonar
+  jobs:
+  #Prepare the sonar cloud
+    - job: Scanner
+      displayName: 'Run Sonar Analysis'
       steps:
-      # Force dotnet 5 again
+      - task: SonarCloudPrepare@1
+        inputs:
+          SonarCloud: 'P2 Scanner'
+          organization: '210726-wvu-net-ext'
+          scannerMode: 'MSBuild'
+          projectKey: '210726-wvu-net-ext_Group3-P2'
+          projectName: 'Group3-P2'
+          extraProperties: 'sonar.exclusions=**/lib/**/*'
+  # DotNet Build and Test Here
+      # Force dotnet 5
       - task: UseDotNet@2
         displayName: Dotnet SDK 5
         inputs:
@@ -111,16 +102,17 @@ stages:
         inputs:
           script: 'dotnet test --configuration Release'
           workingDirectory: $(sDir)
-
-
-- stage: Final
-  #Performs the Sonar Analyze and publish results
-  jobs:
-    - job: Analyze
-      steps:
+  #Finial Sonar Steps
+      # Force dotnet 3.1
+      - task: UseDotNet@2
+        displayName: Dotnet SDK 3
+        inputs:
+          packageType: 'sdk'
+          version: '3.1.x'
+      #Build
+    #Analyze
       - task: SonarCloudAnalyze@1
         displayName: 'Run SonarCloud analysis'
-    - job: Publish
-      steps:
+    #Publish
       - task: SonarCloudPublish@1
         displayName: 'Publish results on build summary'
