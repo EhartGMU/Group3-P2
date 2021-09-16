@@ -14,18 +14,15 @@ variables: #Path to folders
   angular: 'Trader-app'
 
 stages: 
-- stage: Restores_Installs
+- stage: Installs
   #Runs NuGet and NPM restores
   jobs:
-    - job: NuRestore
-      displayName: NuGet Restore
+    - job: NuInstall
+      displayName: NuGet Install
       steps:
       - task: NuGetToolInstaller@1
-      - task: NuGetCommand@2
-        inputs:
-          restoreSolution: $(solution)
-    - job: npmRestore
-      displayName: NPM Restore
+    - job: npmInstall
+      displayName: NPM Install
       steps:
       - task: NodeTool@0
         displayName: Install Node.js
@@ -36,11 +33,6 @@ stages:
         inputs:
           command: "custom"
           customCommand: "install -g @angular/cli"
-
-      - task: Npm@1
-        displayName: "Install_Restore npm packages"
-        inputs:
-          command: "install"
 
 - stage: Prepare
 #Prepare the sonar cloud
@@ -64,16 +56,24 @@ stages:
     - job: NGBuild 
       displayName: Angular Build/Test
       steps:
+      #Restore
+      - task: Npm@1
+        displayName: "Install_Restore npm packages"
+        inputs:
+          command: "install"
+      #Build
       - task: CmdLine@2
         displayName: Angular Build
         inputs:
           script: 'npx ng build --prod'
           workingDirectory: $(angular)
+      #Check
       - task: CmdLine@2
         displayName: Check Angular Violations
         inputs:
           script: 'ng lint'
           workingDirectory: $(angular)
+      #Test
       - task: CmdLine@2
         displayName: Angular Tests
         inputs:
@@ -91,11 +91,17 @@ stages:
         inputs:
           packageType: 'sdk'
           version: '5.x'
+      #Restore
+      - task: NuGetCommand@2
+        inputs:
+          restoreSolution: $(solution)
+      #Build
       - task: CmdLine@2
         displayName: Dotnet Build
         inputs:
           script: 'dotnet build --configuration Release'
           workingDirectory: $(sDir)
+      #Test
       - task: CmdLine@2
         displayName: Dotnet Tests
         inputs:
