@@ -7,5 +7,6 @@ namespace P2_Store.Models
 {
     public class User
     {
+
     }
 }

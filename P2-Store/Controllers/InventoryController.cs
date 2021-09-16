@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using P2_Store.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +10,22 @@ using System.Threading.Tasks;
 
 namespace P2_Store.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Inventory")]
     [ApiController]
     public class InventoryController : ControllerBase
     {
+
+        private ILogger _logger;
+        private IDL _repo;
+        public InventoryController(ILogger<InventoryController> logger, IDL repo)
+        {
+            _logger = logger;
+            _repo = repo;
+        }
+
+
+
+
         // GET: api/<InventoryController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -23,7 +37,8 @@ namespace P2_Store.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            //Newtonsoft.Json.JsonConvert.SerializeObject(_repo.getInventory(id));
+            return "Hey baby";
         }
 
         // POST api/<InventoryController>
