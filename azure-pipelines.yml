@@ -67,7 +67,7 @@ stages:
       - task: CmdLine@2
         displayName: Angular Build
         inputs:
-          script: 'ng build --prod'
+          script: 'npx ng build --prod'
           workingDirectory: $(angular)
       - task: CmdLine@2
         displayName: Check Angular Violations
