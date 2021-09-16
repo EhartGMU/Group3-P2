@@ -75,9 +75,9 @@ stages:
           workingDirectory: $(angular)
 
 
-- stage: Prepare
-#Prepare the sonar cloud
+- stage: DotNet_Sonar
   jobs:
+  #Prepare the sonar cloud
     - job: Prepare
       displayName: 'Prepare Analysis Configuration'
       steps:
@@ -89,9 +89,6 @@ stages:
           projectKey: '210726-wvu-net-ext_Group3-P2'
           projectName: 'Group3-P2'
           extraProperties: 'sonar.exclusions=**/lib/**/*'
-
-- stage: DotNet_BT
-  jobs:
   # DotNet Build and Test Here
     - job: DNBuild
       displayName: Dotnet Build/Test
@@ -113,16 +110,13 @@ stages:
         displayName: Dotnet Tests
         inputs:
           script: 'dotnet test --configuration Release'
-          workingDirectory: $(sDir)
-
-
-- stage: Final
-  #Performs the Sonar Analyze and publish results
-  jobs:
+  #Finial Sonar Steps
+    #Analyze
     - job: Analyze
       steps:
       - task: SonarCloudAnalyze@1
         displayName: 'Run SonarCloud analysis'
+    #Publish
     - job: Publish
       steps:
       - task: SonarCloudPublish@1
