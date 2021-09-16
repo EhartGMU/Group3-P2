@@ -15,7 +15,7 @@ variables: #Path to folders
 
 stages: 
 - stage: Installs
-  #Runs NuGet and NPM restores
+  #Runs NuGet and NPM Installs
   jobs:
     - job: NuInstall
       displayName: NuGet Install
@@ -91,7 +91,7 @@ stages:
         displayName: Dotnet SDK 2
         inputs:
           packageType: 'sdk'
-          version: '2.x'
+          version: '2.1.x'
       #Restore
       - task: NuGetCommand@2
         inputs:
