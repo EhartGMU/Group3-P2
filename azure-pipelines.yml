@@ -18,11 +18,16 @@ stages:
   #Runs NuGet and NPM Installs
   jobs:
     - job: NuInstall
-      displayName: NuGet Install
+      displayName: NuGet Install-Restore
       steps:
+      #Install
       - task: NuGetToolInstaller@1
         inputs:
           checkLatest: true
+      #Restore
+      - task: NuGetCommand@2
+        inputs:
+          restoreSolution: $(solution)
     - job: npmInstall
       displayName: NPM Install
       steps:
@@ -88,16 +93,6 @@ stages:
     - job: DNBuild
       displayName: Dotnet Build/Test
       steps:
-      # Force dotnet 2
-      - task: UseDotNet@2
-        displayName: Dotnet SDK 2
-        inputs:
-          packageType: 'sdk'
-          version: '2.1.x'
-      #Restore
-      - task: NuGetCommand@2
-        inputs:
-          restoreSolution: $(solution)
       # Force dotnet 5 again
       - task: UseDotNet@2
         displayName: Dotnet SDK 5
