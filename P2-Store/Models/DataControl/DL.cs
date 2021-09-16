@@ -266,7 +266,7 @@ namespace P2_Store.Models.DataControl
         }
 
 
-        public Inventory GetIventoryById(int id)
+        public Inventory GetInventoryById(int id)
         {
 
             var rest = _context.Inventories.FirstOrDefault(r => r.Id == id);
@@ -274,18 +274,70 @@ namespace P2_Store.Models.DataControl
             return newRest;
 
         }
+        public Order GetOrderById(int id)
+        {
+
+            var rest = _context.Orders.FirstOrDefault(r => r.Id == id);
+            Order newRest = new Order(rest.Id,  rest.UserId, rest.Total, rest.IsCompleted);
+            return newRest;
+
+        }
+        public Product GetProductById(int id)
+        {
+
+            var rest = _context.Products.FirstOrDefault(r => r.Id == id);
+            Product newRest = new Product(rest.Id, rest.Name, rest.Price, rest.Quantity, rest.OrderId, rest.InventoryId);
+            return newRest;
+
+        }
+
+        public User GetUserById(int id)
+        {
+
+            var rest = _context.Users.FirstOrDefault(r => r.Id == id);
+            User newRest = new User(rest.Id, rest.FullName, rest.Pass, rest.Email, rest.DateJoined, rest.IsAdmin);
+            return newRest;
+
+        }
 
 
+        public void UpdateInventory(Inventory rest)
+        {
+            var OriginalRest = _context.Inventories.FirstOrDefault(r => r.Id == rest.Id);
 
+            OriginalRest.Name = rest.Name;
+            OriginalRest.Price = rest.Price;
+            OriginalRest.Stock = rest.Stock;
+            OriginalRest.CategoryId = rest.CategoryId;
+            OriginalRest.Description = rest.Description;
+            _context.SaveChanges();
+            
+        }
 
+        public void UpdateOrder(Order rest)
+        {
+            var OriginalRest = _context.Orders.FirstOrDefault(r => r.Id == rest.Id);
 
+            OriginalRest.UserId = rest.UserId;
+            OriginalRest.Total = rest.Total;
+            OriginalRest.IsCompleted = rest.IsCompleted;
+            _context.SaveChanges();
 
+        }
 
+        public void UpdateProduct(Product rest)
+        {
+            var OriginalRest = _context.Products.FirstOrDefault(r => r.Id == rest.Id);
 
+            OriginalRest.Name = rest.Name;
+            OriginalRest.Price = rest.Price;
+            OriginalRest.Quantity = rest.Quantity;
+            OriginalRest.OrderId = rest.OrderId;
+            OriginalRest.InventoryId = rest.InventoryId;
+   
+          _context.SaveChanges();
 
-
-
-
+        }
 
 
 
