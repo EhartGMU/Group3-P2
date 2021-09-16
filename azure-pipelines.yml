@@ -9,7 +9,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables: #Path to folders
-  solution: 'P2-Store/*.sln'
+  solution: 'P2-Store'
   angular: 'Trader-app'
 
 stages: 
@@ -67,14 +67,17 @@ stages:
         displayName: Angular Build
         inputs:
           script: 'ng build --prod'
+          workingDirectory: $(angular)
       - task: CmdLine@2
         displayName: Check Angular Violations
         inputs:
           script: 'ng lint'
+          workingDirectory: $(angular)
       - task: CmdLine@2
         displayName: Angular Tests
         inputs:
           script: 'ng test --browsers=ChromeHeadless --code-coverage --watch=false'
+          workingDirectory: $(angular)
 
 
   # DotNet Build and Test Here
