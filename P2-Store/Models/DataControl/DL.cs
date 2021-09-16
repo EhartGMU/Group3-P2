@@ -189,6 +189,96 @@ namespace P2_Store.Models.DataControl
             return n;
         }
 
+        public Inventory DeleteInventory(Inventory n)
+        {
+            _context.Inventories.Remove(
+                new Entities.Inventory
+                {
+                    Id = n.Id,
+                    Name = n.Name,
+                    Price = n.Price,
+                    Stock = n.Stock,
+                    CategoryId = n.CategoryId,
+                    Description = n.Description
+                });
+            _context.SaveChanges();
+            return n;
+        }
+
+        public Order DeleteOrder(Order n)
+        {
+            _context.Orders.Remove(
+                new Entities.Order
+                {
+                    Id = n.Id,
+                    UserId = n.UserId,
+                    Total = n.Total,
+                    IsCompleted = n.IsCompleted
+                });
+            _context.SaveChanges();
+            return n;
+        }
+
+        public Product DeleteProduct(Product n)
+        {
+            _context.Products.Remove(
+                new Entities.Product
+                {
+                    Id = n.Id,
+                    Name = n.Name,
+                    Price = n.Price,
+                    Quantity = n.Quantity,
+                    OrderId = n.OrderId,
+                    InventoryId = n.InventoryId
+                });
+            _context.SaveChanges();
+            return n;
+        }
+
+        public Review DeleteReview(Review n)
+        {
+            _context.Reviews.Remove(
+                new Entities.Review
+                {
+                    Id = n.Id,
+                    InventoryId = n.InventoryId,
+                    UserId = n.UserId,
+                    Score = n.Score,
+                    Message = n.Message
+                });
+            _context.SaveChanges();
+            return n;
+        }
+        public User DeleteUser(User n)
+        {
+            _context.Users.Remove(
+                new Entities.User
+                {
+                    Id = n.Id,
+                    FullName = n.FullName,
+                    Pass = n.Pass,
+                    Email = n.Email,
+                    DateJoined = n.DateJoined,
+                    IsAdmin = n.IsAdmin
+                });
+            _context.SaveChanges();
+            return n;
+        }
+
+
+        public Inventory GetIventoryById(int id)
+        {
+
+            var rest = _context.Inventories.FirstOrDefault(r => r.Id == id);
+            Inventory newRest = new Inventory(rest.Id, rest.Name, rest.Price, rest.Stock, rest.CategoryId, rest.Description);
+            return newRest;
+
+        }
+
+
+
+
+
 
 
 
@@ -203,5 +293,5 @@ namespace P2_Store.Models.DataControl
 
 
     }
-    
+
 }
