@@ -57,7 +57,7 @@ stages:
           projectName: 'Group3-P2'
           extraProperties: 'sonar.exclusions=**/lib/**/*'
 
-- stage: Build Dotnet
+- stage: Build
   #Building and Testing
   jobs:
   # Angular Build and Test Here
