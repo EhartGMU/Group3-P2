@@ -47,7 +47,7 @@ stages:
 #Prepare the sonar cloud
   jobs:
     - job: Prepare
-      displayName: 'Prepare analysis configuration'
+      displayName: 'Prepare Analysis Configuration'
       steps:
       - task: SonarCloudPrepare@1
         inputs:
