@@ -21,6 +21,8 @@ stages:
       displayName: NuGet Install
       steps:
       - task: NuGetToolInstaller@1
+        inputs:
+          checkLatest: true
     - job: npmInstall
       displayName: NPM Install
       steps:
