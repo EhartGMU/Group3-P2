@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using P2_Store.Entities;
 using P2_Store.Models.DataControl;
 using P2_Store.Models.Interfaces;
 using System;
@@ -33,11 +35,11 @@ namespace P2_Store
             services.AddScoped<IDL, DL>();
 
 
-            //services.AddDbContext < G3P2Context > (options =>
-            //        {
-            //            options.UseSqlServer(Configuration.GetConnectionString("retdb"));
+            services.AddDbContext<G3P2dbContext>(options =>
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("retdb"));
 
-            //        });
+                });
 
 
 
