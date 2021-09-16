@@ -9,7 +9,8 @@ pool:
   vmImage: ubuntu-latest
 
 variables: #Path to folders
-  solution: 'P2-Store'
+  sDir: 'P2-Store'
+  solution: 'P2-Store/*.sln'
   angular: 'Trader-app'
 
 stages: 
