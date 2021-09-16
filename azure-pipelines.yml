@@ -53,8 +53,7 @@ stages:
       - task: Npm@1
         displayName: Restore NPM
         inputs:
-          command: "custom"
-          customCommand: 'ci'
+          command: 'ci'
       #Build
       - task: CmdLine@2
         displayName: Angular Build
