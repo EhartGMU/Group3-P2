@@ -9,7 +9,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables: #Path to folders
-  angular: '$(Build.SourcesDirectory)/Trader-app'
+  angular: '$(Build.SourcesDirectory)/project2-app'
 
 stages: 
 - stage: Installs
