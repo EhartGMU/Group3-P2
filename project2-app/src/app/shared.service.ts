@@ -14,6 +14,8 @@ export class SharedService {
     return this.https.get<any>(this.APIUrl+'/inventory');
   }
 
+
+
   addInventory(val:any){
     return this.https.post(this.APIUrl+'/inventory',val)
   }

@@ -13,6 +13,7 @@ export class ProductsComponent implements OnInit {
   InventoryList:any=[];
 
   ngOnInit(): void {
+    this.refreshinvList();
   }
 
   refreshinvList()
