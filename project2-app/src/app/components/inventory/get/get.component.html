@@ -1,0 +1,31 @@
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>InventoryID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>categoryID</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+        <tbody>
+            <tr *ngFor="let dataItem of InventoryList">
+                <td>{{dataItem.id}}</td>
+                <td>{{dataItem.name}}</td>
+                <td>{{dataItem.price}}</td>
+                <td>{{dataItem.stock}}</td>
+                <td>{{dataItem.categoryId}}</td>
+                <td>{{dataItem.description}}</td>
+                <td>
+                    <button type="button" class="btn btn-light mr-1">
+                        Add to Cart
+                    </button>
+
+                </td>
+            </tr>
+        </tbody>
+        
+    
+</table>

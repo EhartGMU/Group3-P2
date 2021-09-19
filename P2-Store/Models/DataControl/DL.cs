@@ -120,7 +120,7 @@ namespace P2_Store.Models.DataControl
             return n;
         }
 
-        public Inventory AddInventory(Inventory n)
+        public async Task<Inventory> AddInventory(Inventory n)
         {
 
             _context.Inventories.Add(
@@ -134,7 +134,7 @@ namespace P2_Store.Models.DataControl
                     Description= n.Description
                 }
             );
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return n;
         }
 
@@ -204,6 +204,7 @@ namespace P2_Store.Models.DataControl
             _context.SaveChanges();
             return n;
         }
+      
 
         public Order DeleteOrder(Order n)
         {

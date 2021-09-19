@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using P2_Store.Models;
 using P2_Store.Models.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -28,23 +29,56 @@ namespace P2_Store.Controllers
 
         // GET: api/<InventoryController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var x = _repo.ListInventory();
+                return Ok(x); 
+         
         }
 
         // GET api/<InventoryController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(_repo.GetInventoryById(id));
-
+            
+            try
+            {
+                var x = _repo.GetInventoryById(id);
+                return Ok(x);
+            }
+            catch
+            {
+                return Ok("It does not exist");
+            }
+                
+            
+        
         }
 
         // POST api/<InventoryController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public  IActionResult Create([FromBody] Inventory x)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return Ok();
+            }
+
+                var t = new Inventory
+                {
+                    Name = x.Name,
+                    Price = x.Price,
+                    Stock = x.Stock,
+                    CategoryId = x.CategoryId,
+                    Description = x.Description,
+                 
+
+                };
+                var r =  _repo.AddInventory(t);
+                return Ok(r);
+         
+
         }
 
         // PUT api/<InventoryController>/5
@@ -54,9 +88,12 @@ namespace P2_Store.Controllers
         }
 
         // DELETE api/<InventoryController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //[HttpDelete("{id}")]
+        //public  IActionResult Delete(Inventory id)
+        //{
+        //    //var x =  _repo.DeleteInventory(id);
+
+        //    //return Ok(x);
+        //}
     }
 }
