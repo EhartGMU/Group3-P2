@@ -48,9 +48,27 @@ stages:
       #   inputs:
       #     script: 'npx ng lint'
       #     workingDirectory: $(angular)
-      # #Test
+    #Test
       - task: CmdLine@2
         displayName: Angular Tests
         inputs:
           script: 'npx ng test --browsers=ChromeHeadless --code-coverage --watch=false'
           workingDirectory: $(angular)
+    #Prepare 
+      - task: SonarCloudPrepare@1
+        inputs:
+          SonarCloud: 'P2 UI Scanner'
+          organization: '210726-wvu-net-ext'
+          scannerMode: 'CLI'
+          configMode: 'manual'
+          cliProjectKey: '210726-wvu-net-ext_Group3-P2_UI'
+          cliSources: '$(angular)'
+          extraProperties: |
+            sonar.javascript.lcov.reportPaths=$(appDir)/coverage/$(appDir)/lcov.info
+            sonar.coverage.exclusions=**/*.spec.ts
+    #Analyze
+      - task: SonarCloudAnalyze@1
+        displayName: 'Run SonarCloud analysis'
+    #Publish
+      - task: SonarCloudPublish@1
+        displayName: 'Publish results on build summary'
