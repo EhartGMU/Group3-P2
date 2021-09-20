@@ -30,3 +30,6 @@ Wandering Trader is a store for all to find and buy products from all over the w
 
 ## Database Structure *BETA*
 ![Lucid Charts](https://i.imgur.com/bhzaTkF.png)
+
+## Status
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=210726-wvu-net-ext_Group3-P2&metric=alert_status)](https://sonarcloud.io/dashboard?id=210726-wvu-net-ext_Group3-P2)
