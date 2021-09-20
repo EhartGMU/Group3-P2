@@ -11,12 +11,13 @@ export class GetComponent implements OnInit {
   constructor(private service :SharedService) { }
 
   InventoryList:any=[];
+ 
 
   ngOnInit(): void {
     this.refreshinvList();
   }
 
-
+ 
   refreshinvList()
   {
     this.service.ListInventory().subscribe(data=>{

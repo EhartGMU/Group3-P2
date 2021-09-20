@@ -101,6 +101,18 @@ namespace P2_Store.Models.DataControl
                 })
                 .ToList();
         }
+        public List<Category> ListCategory()
+        {
+            return _context.Categories
+
+                .Select(n => new Category
+                {
+                    Id = n.Id,
+                    Subject = n.Subject
+
+                })
+                .ToList();
+        }
 
         public Product AddProduct(Product n)
         {
@@ -109,7 +121,7 @@ namespace P2_Store.Models.DataControl
             _context.Products.Add(
                 new Entities.Product
                 {
-                    Id = n.Id,
+                    
                     Name = n.Name,
                     Price = n.Price,
                     Quantity = n.Quantity,
@@ -166,7 +178,7 @@ namespace P2_Store.Models.DataControl
             _context.Reviews.Add(
                 new Entities.Review
                 {
-                    Id = n.Id,
+                    
                     InventoryId = n.InventoryId,
                     UserId = n.UserId,
                     Score = n.Score,
@@ -186,7 +198,7 @@ namespace P2_Store.Models.DataControl
             _context.Users.Add(
                 new Entities.User
                 {
-                    Id = n.Id,
+                   
                     FullName = n.FullName,
                     Pass = n.Pass,
                     Email = n.Email,
@@ -197,6 +209,20 @@ namespace P2_Store.Models.DataControl
             _context.SaveChanges();
             return n;
         }
+
+        public Category AddCategory(Category n)
+        {
+
+            _context.Categories.Add(
+                new Entities.Category
+                {
+                    Subject = n.Subject
+                }
+            );
+            _context.SaveChanges();
+            return n;
+        }
+
 
         public Inventory DeleteInventory(Inventory n)
         {
@@ -270,6 +296,17 @@ namespace P2_Store.Models.DataControl
                     Email = n.Email,
                     DateJoined = n.DateJoined,
                     IsAdmin = n.IsAdmin
+                });
+            _context.SaveChanges();
+            return n;
+        }
+        public Category DeleteCategory(Category n)
+        {
+            _context.Categories.Remove(
+                new Entities.Category
+                {
+                    Id = n.Id,
+                    Subject = n.Subject
                 });
             _context.SaveChanges();
             return n;
