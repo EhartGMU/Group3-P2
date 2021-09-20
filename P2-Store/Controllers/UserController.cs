@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using P2_Store.Models;
+using P2_Store.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,36 +15,83 @@ namespace P2_Store.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        // GET: api/<UserController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private ILogger _logger;
+        private IDL _repo;
+        public UserController(ILogger<UserController> logger, IDL repo)
         {
-            return new string[] { "value1", "value2" };
+            _logger = logger;
+            _repo = repo;
         }
 
-        // GET api/<UserController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+
+        // GET: api/<UserController>
+        [HttpGet]
+        public IActionResult Get()
         {
-            return "value";
+            var x = _repo.ListUsers();
+
+            return Ok(x);
+
         }
+
+/*        // GET api/<UserController>/5
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            try
+            {
+                var x = _repo.GetUserById(id);
+                return Ok(x);
+            }
+
+            catch
+            {
+                return Ok("It does not exist");
+            }
+
+
+        }*/
 
         // POST api/<UserController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Create([FromBody] User x)
         {
+            var r = _repo.AddUser(x);
+
+            return Ok(r);
         }
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
-        }
+            
 
+        }
+        // GET api/<InventoryController>/5
+        [HttpGet("{mail}")]
+        public IActionResult Get(string mail)
+        {
+            try
+            {
+                var x = _repo.GetUserByEmail(mail);
+                return Ok(x);
+                
+            }
+
+            catch
+            {
+                return Ok("It does not exist");
+            }
+
+        }
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(User id)
         {
+            var x = _repo.DeleteUser(id);
+            return Ok(x);
+
         }
     }
 }

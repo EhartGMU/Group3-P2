@@ -41,6 +41,11 @@ namespace P2_Store
 
                 });
 
+            services.AddCors(c =>
+            {
+                c.AddPolicy("YO", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+            });
 
 
 
@@ -55,6 +60,8 @@ namespace P2_Store
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
