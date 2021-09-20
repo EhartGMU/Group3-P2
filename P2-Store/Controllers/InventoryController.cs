@@ -46,6 +46,7 @@ namespace P2_Store.Controllers
                 var x = _repo.GetInventoryById(id);
                 return Ok(x);
             }
+           
             catch
             {
                 return Ok("It does not exist");
@@ -57,28 +58,13 @@ namespace P2_Store.Controllers
 
         // POST api/<InventoryController>
         [HttpPost]
-        public  IActionResult Create([FromBody] Inventory x)
+        public async Task<ActionResult> Create([FromBody] Inventory x)
         {
 
-            if (!ModelState.IsValid)
-            {
-                return Ok();
-            }
-
-                var t = new Inventory
-                {
-                    Name = x.Name,
-                    Price = x.Price,
-                    Stock = x.Stock,
-                    CategoryId = x.CategoryId,
-                    Description = x.Description,
-                 
-
-                };
-                var r =  _repo.AddInventory(t);
+           
+                var r = await  _repo.AddInventory(x);
                 return Ok(r);
-         
-
+        
         }
 
         // PUT api/<InventoryController>/5
@@ -87,13 +73,14 @@ namespace P2_Store.Controllers
         {
         }
 
-        // DELETE api/<InventoryController>/5
-        //[HttpDelete("{id}")]
-        //public  IActionResult Delete(Inventory id)
-        //{
-        //    //var x =  _repo.DeleteInventory(id);
+         // DELETE api/<InventoryController>/5
 
-        //    //return Ok(x);
-        //}
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Inventory id)
+        {
+            var x = _repo.DeleteInventory(id);
+
+            return Ok(x);
+        }
     }
 }

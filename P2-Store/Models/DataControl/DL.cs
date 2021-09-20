@@ -126,7 +126,7 @@ namespace P2_Store.Models.DataControl
             _context.Inventories.Add(
                 new Entities.Inventory
                 {
-                    Id = n.Id,
+                   
                     Name = n.Name,
                     Price = n.Price,
                     Stock = n.Stock,
@@ -273,6 +273,7 @@ namespace P2_Store.Models.DataControl
             var rest = _context.Inventories.FirstOrDefault(r => r.Id == id);
             Inventory newRest = new Inventory(rest.Id, rest.Name, rest.Price, rest.Stock, rest.CategoryId, rest.Description);
             return newRest;
+           
 
         }
         public Order GetOrderById(int id)
