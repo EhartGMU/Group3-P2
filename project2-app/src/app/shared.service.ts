@@ -14,6 +14,13 @@ export class SharedService {
     return this.https.get<any>(this.APIUrl+'/inventory');
   }
 
+  ListOrders():Observable<any[]>{
+    return this.https.get<any>(this.APIUrl+'/order');
+  }
+
+  ListProduct():Observable<any[]>{
+    return this.https.get<any>(this.APIUrl+'/product');
+  }
 
 
   addInventory(val:any){
