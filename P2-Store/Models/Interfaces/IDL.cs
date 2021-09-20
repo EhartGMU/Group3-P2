@@ -11,6 +11,7 @@ namespace P2_Store.Models.Interfaces
         List<Inventory> ListInventory();
         List<Order> ListOrders();
         List<Review> ListReviews();
+        List<Category> ListCategory();
         List<User> ListUsers();
         Product AddProduct(Product n);
         Product DeleteProduct(Product n);
@@ -23,6 +24,9 @@ namespace P2_Store.Models.Interfaces
         Review DeleteReview(Review n);
         User AddUser(User n);
         User DeleteUser(User n);
+
+        Category AddCategory(Category n);
+        Category DeleteCategory(Category n);
 
         Inventory GetInventoryById(int id);
         Order GetOrderById(int id);
