@@ -101,14 +101,27 @@ namespace P2_Store.Models.DataControl
                 })
                 .ToList();
         }
+        public List<Category> ListCategory()
+        {
+            return _context.Categories
+
+                .Select(n => new Category
+                {
+                    Id = n.Id,
+                    Subject = n.Subject
+
+                })
+                .ToList();
+        }
 
         public Product AddProduct(Product n)
         {
+            
 
             _context.Products.Add(
                 new Entities.Product
                 {
-                    Id = n.Id,
+                    
                     Name = n.Name,
                     Price = n.Price,
                     Quantity = n.Quantity,
@@ -120,13 +133,13 @@ namespace P2_Store.Models.DataControl
             return n;
         }
 
-        public Inventory AddInventory(Inventory n)
+        public async Task<Inventory> AddInventory(Inventory n)
         {
 
             _context.Inventories.Add(
                 new Entities.Inventory
                 {
-                    Id = n.Id,
+                   
                     Name = n.Name,
                     Price = n.Price,
                     Stock = n.Stock,
@@ -134,24 +147,29 @@ namespace P2_Store.Models.DataControl
                     Description= n.Description
                 }
             );
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return n;
         }
 
-        public Order AddOrder(Order n)
+        public Order AddOrder(int userId)
         {
-
             _context.Orders.Add(
                 new Entities.Order
                 {
-                    Id = n.Id,
-                    UserId = n.UserId,
-                    Total = n.Total,
-                    IsCompleted = n.IsCompleted                
+                    UserId = userId,
+                    IsCompleted = 0         
                 }
             );
             _context.SaveChanges();
-            return n;
+            var k = _context.Orders.FirstOrDefault(x => x.IsCompleted == 0 && x.UserId == userId);
+            Order x = new Order
+            {
+                UserId = k.UserId,
+                IsCompleted = k.IsCompleted,
+                Total = k.Total
+            };
+            return x;
+            
         }
 
         public Review AddReview(Review n)
@@ -160,7 +178,7 @@ namespace P2_Store.Models.DataControl
             _context.Reviews.Add(
                 new Entities.Review
                 {
-                    Id = n.Id,
+                    
                     InventoryId = n.InventoryId,
                     UserId = n.UserId,
                     Score = n.Score,
@@ -170,14 +188,17 @@ namespace P2_Store.Models.DataControl
             _context.SaveChanges();
             return n;
         }
-
         public User AddUser(User n)
         {
-
+            var k = _context.Users.FirstOrDefault(x => x.Email == n.Email);
+            if(k != null)
+            {
+                return null;
+            }
             _context.Users.Add(
                 new Entities.User
                 {
-                    Id = n.Id,
+                   
                     FullName = n.FullName,
                     Pass = n.Pass,
                     Email = n.Email,
@@ -188,6 +209,20 @@ namespace P2_Store.Models.DataControl
             _context.SaveChanges();
             return n;
         }
+
+        public Category AddCategory(Category n)
+        {
+
+            _context.Categories.Add(
+                new Entities.Category
+                {
+                    Subject = n.Subject
+                }
+            );
+            _context.SaveChanges();
+            return n;
+        }
+
 
         public Inventory DeleteInventory(Inventory n)
         {
@@ -204,6 +239,7 @@ namespace P2_Store.Models.DataControl
             _context.SaveChanges();
             return n;
         }
+      
 
         public Order DeleteOrder(Order n)
         {
@@ -264,6 +300,17 @@ namespace P2_Store.Models.DataControl
             _context.SaveChanges();
             return n;
         }
+        public Category DeleteCategory(Category n)
+        {
+            _context.Categories.Remove(
+                new Entities.Category
+                {
+                    Id = n.Id,
+                    Subject = n.Subject
+                });
+            _context.SaveChanges();
+            return n;
+        }
 
 
         public Inventory GetInventoryById(int id)
@@ -272,78 +319,121 @@ namespace P2_Store.Models.DataControl
             var rest = _context.Inventories.FirstOrDefault(r => r.Id == id);
             Inventory newRest = new Inventory(rest.Id, rest.Name, rest.Price, rest.Stock, rest.CategoryId, rest.Description);
             return newRest;
+           
 
         }
-        public Order GetOrderById(int id)
+        public List<Order> GetOrderById(int id)
         {
 
-            var rest = _context.Orders.FirstOrDefault(r => r.Id == id);
-            Order newRest = new Order(rest.Id,  rest.UserId, rest.Total, rest.IsCompleted);
-            return newRest;
+            var rest = _context.Orders.Where(r => r.UserId == id).ToList();
+            List<Order> list = new List<Order>();
+            foreach(var k in rest)
+            {
+                list.Add(new Order
+                {
+                    Id = k.Id,
+                    UserId = k.UserId,
+                    Total = k.Total,
+                    IsCompleted = k.IsCompleted,
+                });
+            }
+            return list;
 
         }
-        public Product GetProductById(int id)
+        public List<Product> GetProductsById(int id)
         {
 
-            var rest = _context.Products.FirstOrDefault(r => r.Id == id);
-            Product newRest = new Product(rest.Id, rest.Name, rest.Price, rest.Quantity, rest.OrderId, rest.InventoryId);
-            return newRest;
+            var rest = _context.Products.Where(r => r.Id == id);
+            List<Product> newRest = new List<Product>();
+            foreach (var k in rest)
+            {
+                new Product(k.Id, k.Name, k.Price, k.Quantity, k.OrderId, k.InventoryId);
 
+                return newRest;
+
+            }
+            return null;
         }
 
         public User GetUserById(int id)
         {
 
-            var rest = _context.Users.FirstOrDefault(r => r.Id == id);
-            User newRest = new User(rest.Id, rest.FullName, rest.Pass, rest.Email, rest.DateJoined, rest.IsAdmin);
-            return newRest;
+            var user = _context.Users.FirstOrDefault(r => r.Id == id);
+            User newUser = new User(user.Id, user.FullName, user.Pass, user.Email, user.DateJoined, user.IsAdmin);
+            return newUser;
 
         }
 
 
-        public void UpdateInventory(Inventory rest)
+        public void UpdateInventory(Inventory r)
         {
-            var OriginalRest = _context.Inventories.FirstOrDefault(r => r.Id == rest.Id);
-
-            OriginalRest.Name = rest.Name;
-            OriginalRest.Price = rest.Price;
-            OriginalRest.Stock = rest.Stock;
-            OriginalRest.CategoryId = rest.CategoryId;
-            OriginalRest.Description = rest.Description;
-            _context.SaveChanges();
-            
-        }
-
-        public void UpdateOrder(Order rest)
-        {
-            var OriginalRest = _context.Orders.FirstOrDefault(r => r.Id == rest.Id);
-
-            OriginalRest.UserId = rest.UserId;
-            OriginalRest.Total = rest.Total;
-            OriginalRest.IsCompleted = rest.IsCompleted;
+            var Original = GetInventoryById(r.Id);
+            Original.Name = r.Name;
+            Original.Price = r.Price;
+            Original.Stock = r.Stock;
+            Original.CategoryId = r.CategoryId;
+            Original.Description = r.Description;
             _context.SaveChanges();
 
         }
 
-        public void UpdateProduct(Product rest)
+        public void UpdateOrder(Order p)
         {
-            var OriginalRest = _context.Products.FirstOrDefault(r => r.Id == rest.Id);
+            var Original = GetOrderById(p.Id);
+            var newOriginal = Original.FirstOrDefault(x => x.IsCompleted == 0);
+            newOriginal.UserId = p.UserId;
+            newOriginal.Total = p.Total;
+            newOriginal.IsCompleted = p.IsCompleted;
+            _context.SaveChanges();
 
-            OriginalRest.Name = rest.Name;
-            OriginalRest.Price = rest.Price;
-            OriginalRest.Quantity = rest.Quantity;
-            OriginalRest.OrderId = rest.OrderId;
-            OriginalRest.InventoryId = rest.InventoryId;
+        }
+        public Product GetProductById(int id)
+        {
+            var rest = _context.Products.FirstOrDefault(r => r.Id == id);
+            Product k = new Product
+            {
+                Id = rest.Id,
+                Name = rest.Name,
+                Price = rest.Price,
+                InventoryId = rest.InventoryId,
+                OrderId = rest.OrderId,
+                Quantity = rest.Quantity
+
+            };
+            return k;
+        }
+        public void UpdateProduct(Product p)
+        {
+            var Original = GetProductById(p.Id);
+
+            Original.Name = p.Name;
+            Original.Price = p.Price;
+            Original.Quantity = p.Quantity;
+            Original.OrderId = p.OrderId;
+            Original.InventoryId = p.InventoryId;
    
           _context.SaveChanges();
 
         }
 
 
+        public User GetUserByEmail(string mail)
+        {
+            var search = _context.Users.FirstOrDefault(u => u.Email == mail);
+            if (search != null)
+            {
+                User newUser = new User(search.Id, search.FullName, search.Pass, search.Email, search.DateJoined, search.IsAdmin);
+                return newUser;
+            }
+            return null;
+        }
+
+        public void AddProductToOrder(Order order, Product x)
+        {
+            
+        }
 
 
-
-
-    }
+    };
 
 }

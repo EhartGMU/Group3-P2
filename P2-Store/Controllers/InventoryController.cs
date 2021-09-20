@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using P2_Store.Models;
 using P2_Store.Models.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -22,41 +23,60 @@ namespace P2_Store.Controllers
             _logger = logger;
             _repo = repo;
         }
-
-
-
-
         // GET: api/<InventoryController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var x = _repo.ListInventory();
+                return Ok(x); 
+         
         }
 
         // GET api/<InventoryController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(_repo.GetInventoryById(id));
+        public IActionResult Get(int id)
+        {         
+            try
+            {
+                var x = _repo.GetInventoryById(id);
+                return Ok(x);
+            }
+           
+            catch
+            {
+                return Ok("It does not exist");
+            }
 
         }
 
         // POST api/<InventoryController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Create([FromBody] Inventory x)
         {
+
+           
+                var r = await  _repo.AddInventory(x);
+                return Ok(r);
+        
         }
 
         // PUT api/<InventoryController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] Inventory n)
         {
+            _repo.UpdateInventory(n);
+
+            return Ok();
         }
 
-        // DELETE api/<InventoryController>/5
+         // DELETE api/<InventoryController>/5
+
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(Inventory id)
         {
+            var x = _repo.DeleteInventory(id);
+
+            return Ok(x);
         }
     }
 }

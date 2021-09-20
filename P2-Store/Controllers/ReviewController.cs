@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using P2_Store.Models;
+using P2_Store.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,81 +9,50 @@ using System.Threading.Tasks;
 
 namespace P2_Store.Controllers
 {
-    public class ReviewController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ReviewController : ControllerBase
     {
-        // GET: ReviewController
-        public ActionResult Index()
+        private ILogger _logger;
+        private IDL _repo;
+        public ReviewController(ILogger<ReviewController> logger, IDL repo)
         {
-            return View();
+            _logger = logger;
+            _repo = repo;
         }
 
-        // GET: ReviewController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        
+        public IActionResult Get()
         {
-            return View();
+            var x = _repo.ListReviews();
+            return Ok(x);
         }
 
-        // GET: ReviewController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //// GET: ReviewController/Details/5
+        //[HttpGet("{id}")]
+        //public IActionResult Get(int id)
+        //{
 
-        // POST: ReviewController/Create
+        //}
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Create([FromBody] Review x)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+
+
+            var r = _repo.AddReview(x);
+            return Ok(r);
+
         }
 
-        // GET: ReviewController/Edit/5
-        public ActionResult Edit(int id)
+        //weird
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Review review)
         {
-            return View();
-        }
+            var x = _repo.DeleteReview(review);
 
-        // POST: ReviewController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ReviewController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ReviewController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return Ok(x);
         }
     }
 }
