@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using P2_Store.Models;
+using P2_Store.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,24 +15,49 @@ namespace P2_Store.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
+
+        private ILogger _logger;
+        private IDL _repo;
+        public ProductController(ILogger<ProductController> logger, IDL repo)
+        {
+            _logger = logger;
+            _repo = repo;
+        }
+
+
+
         // GET: api/<ProductController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var x = _repo.ListProducts();
+            return Ok(x);
         }
 
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            try
+            {
+                var x = _repo.GetProductById(id);
+                return Ok(x);
+            }
+
+            catch
+            {
+                return Ok("It does not exist");
+            }
         }
 
         // POST api/<ProductController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Create ([FromBody] Product x )
         {
+            var r = _repo.AddProduct(x);
+
+            return Ok(r);
+
         }
 
         // PUT api/<ProductController>/5
@@ -40,8 +68,11 @@ namespace P2_Store.Controllers
 
         // DELETE api/<ProductController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(Product id)
         {
+            var x = _repo.DeleteProduct(id);
+            return Ok(x);
+
         }
     }
 }

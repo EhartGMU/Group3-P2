@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using P2_Store.Models;
+using P2_Store.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,24 +15,50 @@ namespace P2_Store.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private ILogger _logger;
+        private IDL _repo;
+        public UserController(ILogger<UserController> logger, IDL repo)
+        {
+            _logger = logger;
+            _repo = repo;
+        }
+
+
         // GET: api/<UserController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var x = _repo.ListUsers();
+
+            return Ok(x);
+
         }
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            try
+            {
+                var x = _repo.GetUserById(id);
+                return Ok(x);
+            }
+
+            catch
+            {
+                return Ok("It does not exist");
+            }
+
+
         }
 
         // POST api/<UserController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Create([FromBody] User x)
         {
+            var r = _repo.AddUser(x);
+
+            return Ok(r);
         }
 
         // PUT api/<UserController>/5
@@ -40,8 +69,11 @@ namespace P2_Store.Controllers
 
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(User id)
         {
+            var x = _repo.DeleteUser(id);
+            return Ok(x);
+
         }
     }
 }
