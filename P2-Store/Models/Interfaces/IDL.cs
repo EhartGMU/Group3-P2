@@ -15,7 +15,7 @@ namespace P2_Store.Models.Interfaces
         Product AddProduct(Product n);
         Product DeleteProduct(Product n);
 
-        Inventory AddInventory(Inventory n);
+        Task<Inventory> AddInventory(Inventory n);
         Inventory DeleteInventory(Inventory n);
         Order AddOrder(Order n);
         Order DeleteOrder(Order n);
