@@ -3,9 +3,17 @@ import { SearchbarComponent } from '../components/searchbar/searchbar.component'
 import { HeaderComponent } from '../components/header/header.component';
 import { ProductsComponent } from '../components/products/products.component';
 import { FooterComponent } from '../components/footer/footer.component';
+import { InventoryComponent } from '../components/inventory/inventory.component';
+import { GetComponent } from '../components/inventory/get/get.component';
+import { AddEditComponent } from '../components/inventory/add-edit/add-edit.component';
+import { OrderComponent } from '../components/order/order.component';
+import { GetorderComponent } from '../components/order/getorder/getorder.component';
+import { AddEditorderComponent } from '../components/order/add-editorder/add-editorder.component';
+import { DisplayproductComponent } from '../components/displayproduct/displayproduct.component';
+import { GetproductComponent } from '../components/displayproduct/getproduct/getproduct.component';
 
 @NgModule({
-    declarations: [ SearchbarComponent, HeaderComponent, ProductsComponent, FooterComponent ],
-    exports: [ SearchbarComponent, HeaderComponent, ProductsComponent, FooterComponent ]
+    declarations: [ SearchbarComponent, HeaderComponent, ProductsComponent, FooterComponent, InventoryComponent, GetComponent, AddEditComponent, OrderComponent, GetorderComponent, AddEditorderComponent, DisplayproductComponent, GetproductComponent ],
+    exports: [ SearchbarComponent, HeaderComponent, ProductsComponent, FooterComponent, InventoryComponent, GetComponent, AddEditComponent, OrderComponent, GetorderComponent, AddEditorderComponent, DisplayproductComponent, GetproductComponent ]
 })
 export class SharedModule {}
