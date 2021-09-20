@@ -17,7 +17,7 @@ namespace P2_Store.Models.Interfaces
 
         Task<Inventory> AddInventory(Inventory n);
         Inventory DeleteInventory(Inventory n);
-        Order AddOrder(Order n);
+        Order AddOrder(int n);
         Order DeleteOrder(Order n);
         Review AddReview(Review n);
         Review DeleteReview(Review n);
@@ -25,8 +25,8 @@ namespace P2_Store.Models.Interfaces
         User DeleteUser(User n);
 
         Inventory GetInventoryById(int id);
-        Order GetOrderById(int id);
-        Product GetProductById(int id);
+        List<Order> GetOrderById(int id);
+        List<Product> GetProductsById(int id);
 
         User GetUserById(int id);
 
@@ -35,7 +35,9 @@ namespace P2_Store.Models.Interfaces
         void UpdateOrder(Order rest);
 
         void UpdateProduct(Product rest);
+        User GetUserByEmail(string mail);
+        void AddProductToOrder(Order order, Product x);
 
-
+        Product GetProductById(int id);
     }
 }
