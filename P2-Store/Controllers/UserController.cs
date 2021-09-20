@@ -34,7 +34,7 @@ namespace P2_Store.Controllers
 
         }
 
-        // GET api/<UserController>/5
+/*        // GET api/<UserController>/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -50,7 +50,7 @@ namespace P2_Store.Controllers
             }
 
 
-        }
+        }*/
 
         // POST api/<UserController>
         [HttpPost]
@@ -65,8 +65,26 @@ namespace P2_Store.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
-        }
+            
 
+        }
+        // GET api/<InventoryController>/5
+        [HttpGet("{mail}")]
+        public IActionResult Get(string mail)
+        {
+            try
+            {
+                var x = _repo.GetUserByEmail(mail);
+                return Ok(x);
+                
+            }
+
+            catch
+            {
+                return Ok("It does not exist");
+            }
+
+        }
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(User id)
