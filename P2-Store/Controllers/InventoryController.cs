@@ -23,10 +23,6 @@ namespace P2_Store.Controllers
             _logger = logger;
             _repo = repo;
         }
-
-
-
-
         // GET: api/<InventoryController>
         [HttpGet]
         public IActionResult Get()
@@ -39,8 +35,7 @@ namespace P2_Store.Controllers
         // GET api/<InventoryController>/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
-        {
-            
+        {         
             try
             {
                 var x = _repo.GetInventoryById(id);
@@ -51,9 +46,7 @@ namespace P2_Store.Controllers
             {
                 return Ok("It does not exist");
             }
-                
-            
-        
+
         }
 
         // POST api/<InventoryController>
@@ -69,8 +62,11 @@ namespace P2_Store.Controllers
 
         // PUT api/<InventoryController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] Inventory n)
         {
+            _repo.UpdateInventory(n);
+
+            return Ok();
         }
 
          // DELETE api/<InventoryController>/5

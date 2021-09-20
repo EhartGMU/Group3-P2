@@ -49,7 +49,7 @@ namespace P2_Store.Controllers
             }
         }
 
-        // POST api/<OrderController>
+/*        // POST api/<OrderController>
         [HttpPost]
         public IActionResult Create([FromBody] Order x)
         {
@@ -57,7 +57,7 @@ namespace P2_Store.Controllers
 
             return Ok(r);
 
-        }
+        }*/
 
         // PUT api/<OrderController>/5
         [HttpPut("{id}")]
