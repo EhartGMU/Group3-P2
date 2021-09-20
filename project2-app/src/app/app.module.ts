@@ -2,43 +2,18 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { HeaderComponent } from './components/header/header.component';
-import { SearchbarComponent } from './components/searchbar/searchbar.component';
-import { ProductsComponent } from './components/products/products.component';
-import { InventoryComponent } from './components/inventory/inventory.component';
-import { GetComponent } from './components/inventory/get/get.component';
-import { AddEditComponent } from './components/inventory/add-edit/add-edit.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedService } from './shared.service';
-import {HttpClientModule} from '@angular/common/http';
-import {FormsModule,ReactiveFormsModule} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from 'src/app/shared-module/shared.module';
+
+
+
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SearchbarComponent,
-   
-    HeaderComponent,
-    InventoryComponent,
-    ProductsComponent,
-    FooterComponent,
-    
-    GetComponent,
-    AddEditComponent,
-
-    
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    RouterModule,
-    
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-
-  ],
+  declarations: [ AppComponent ],
+  imports: [ BrowserModule, AppRoutingModule, RouterModule, SharedModule, HttpClientModule, FormsModule, ReactiveFormsModule ],
   providers: [SharedService],
   bootstrap: [AppComponent]
 })
