@@ -1,28 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { SharedModule } from './shared-module/shared.module';
 import { AppComponent } from './app.component';
-import { SearchbarComponent } from './components/searchbar/searchbar.component';
-
-import { HeaderComponent } from './components/header/header.component';
-
-import { ProductsComponent } from './components/products/products.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { SearchbarComponent } from './components/searchbar/searchbar.component';
+import { ProductsComponent } from './components/products/products.component';
+
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SearchbarComponent,
-   
-    HeaderComponent,
-    
-    ProductsComponent,
-    FooterComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  imports: [ BrowserModule, SharedModule ],
+  declarations: [ AppComponent ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }
