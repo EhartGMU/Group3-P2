@@ -69,6 +69,16 @@ stages:
     #Analyze
       - task: SonarCloudAnalyze@1
         displayName: 'Run SonarCloud analysis'
-    #Publish
+    #Publish Sonar
       - task: SonarCloudPublish@1
         displayName: 'Publish results on build summary'
+#Publish Artifact
+- stage: Publish
+  jobs:
+    - job:
+      steps:
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'StoreUI'
+          publishLocation: 'Container'
