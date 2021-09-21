@@ -75,7 +75,7 @@ stages:
       - task: SonarCloudPublish@1
         displayName: 'Publish results on build summary'
   #Publish and Deploy
-- stage: Publish Artifact
+- stage: Publish_Artifact
   jobs:
     - job: Publish
       displayName: 'Dotnet Publish'
