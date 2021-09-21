@@ -74,3 +74,20 @@ stages:
     #Publish
       - task: SonarCloudPublish@1
         displayName: 'Publish results on build summary'
+  #Publish and Deploy
+- stage: Publish_Artifact
+  jobs:
+    - job: Publish
+      displayName: 'Dotnet Publish'
+      steps:
+    #Publishes dotnet to staging dir
+      - script: dotnet publish
+          --configuration Release
+          --output $(Build.StagingDirectory)
+        workingDirectory: $(sDir)
+    #Publishes Artifact to Azure
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'StoreApp'
+          publishLocation: 'Container'
