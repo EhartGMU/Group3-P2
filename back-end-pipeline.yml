@@ -84,7 +84,7 @@ stages:
       - script: dotnet publish
           --configuration Release
           --output $(Build.StagingDirectory)
-        workingDirectory: $(solution)
+        workingDirectory: $(sDir)
     #Publishes Artifact to Azure
       - task: PublishBuildArtifacts@1
         inputs:
