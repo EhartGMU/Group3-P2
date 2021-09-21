@@ -10,6 +10,7 @@ import { SidecheckoutComponent } from './components/sidecheckout/sidecheckout.co
 
 
 
+
 const routes : Routes = [
 
   {path:'inventory',component: InventoryComponent},
