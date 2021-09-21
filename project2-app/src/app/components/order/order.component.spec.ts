@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { OrderComponent } from './order.component';
+import { SharedModule } from '../../shared-module/shared.module';
 
 describe('OrderComponent', () => {
   let component: OrderComponent;
@@ -8,7 +9,8 @@ describe('OrderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OrderComponent ]
+      imports: [ SharedModule, HttpClientModule ],
+      providers: [ HttpClient]
     })
     .compileComponents();
   });
