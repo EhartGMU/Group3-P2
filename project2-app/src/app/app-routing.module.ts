@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
+import { SharedModule } from './shared-module/shared.module';
 
 import { InventoryComponent } from './components/inventory/inventory.component';
 import { ProductsComponent } from './components/products/products.component';
@@ -19,7 +19,7 @@ const routes : Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [SharedModule, RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
