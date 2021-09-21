@@ -13,7 +13,34 @@ import { DisplayproductComponent } from '../components/displayproduct/displaypro
 import { GetproductComponent } from '../components/displayproduct/getproduct/getproduct.component';
 
 @NgModule({
-    declarations: [ SearchbarComponent, HeaderComponent, ProductsComponent, FooterComponent, InventoryComponent, GetComponent, AddEditComponent, OrderComponent, GetorderComponent, AddEditorderComponent, DisplayproductComponent, GetproductComponent ],
-    exports: [ SearchbarComponent, HeaderComponent, ProductsComponent, FooterComponent, InventoryComponent, GetComponent, AddEditComponent, OrderComponent, GetorderComponent, AddEditorderComponent, DisplayproductComponent, GetproductComponent ]
+    declarations: [ 
+        SearchbarComponent, 
+        HeaderComponent, 
+        ProductsComponent, 
+        FooterComponent, 
+        InventoryComponent, 
+        GetComponent, 
+        AddEditComponent, 
+        OrderComponent, 
+        GetorderComponent, 
+        AddEditorderComponent, 
+        DisplayproductComponent, 
+        GetproductComponent 
+    ],
+
+    exports: [ 
+        SearchbarComponent, 
+        HeaderComponent, 
+        ProductsComponent, 
+        FooterComponent, 
+        InventoryComponent, 
+        GetComponent, 
+        AddEditComponent, 
+        OrderComponent, 
+        GetorderComponent, 
+        AddEditorderComponent, 
+        DisplayproductComponent, 
+        GetproductComponent 
+    ]
 })
 export class SharedModule {}

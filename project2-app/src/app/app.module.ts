@@ -12,7 +12,6 @@ import { SharedModule } from 'src/app/shared-module/shared.module';
 @NgModule({
   declarations: [ AppComponent ],
   imports: [ BrowserModule, AppRoutingModule, RouterModule, SharedModule, HttpClientModule, FormsModule, ReactiveFormsModule ],
-  providers: [SharedService, HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
