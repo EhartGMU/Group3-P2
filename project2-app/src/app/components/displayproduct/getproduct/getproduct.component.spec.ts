@@ -1,3 +1,5 @@
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GetproductComponent } from './getproduct.component';
@@ -8,7 +10,9 @@ describe('GetproductComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GetproductComponent ]
+      declarations: [ GetproductComponent ],
+      imports: [ CommonModule ],
+      providers: [ {provide:HttpClient, useValue: { get: () => null }} ]
     })
     .compileComponents();
   });

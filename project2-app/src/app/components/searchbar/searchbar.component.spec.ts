@@ -1,6 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { SharedModule } from '../../shared-module/shared.module';
 import { SearchbarComponent } from './searchbar.component';
 
 describe('SearchbarComponent', () => {
@@ -9,9 +7,7 @@ describe('SearchbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ SharedModule, HttpClientModule ],
-      declarations: [ SearchbarComponent ],
-      providers: [ HttpClient]
+      declarations: [ SearchbarComponent ]
     })
     .compileComponents();
   });

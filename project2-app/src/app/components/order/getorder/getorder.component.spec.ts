@@ -1,3 +1,5 @@
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GetorderComponent } from './getorder.component';
@@ -8,7 +10,9 @@ describe('GetorderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GetorderComponent ]
+      declarations: [ GetorderComponent ],
+      imports: [ CommonModule ],
+      providers: [ {provide:HttpClient, useValue: { get: () => null }} ]
     })
     .compileComponents();
   });

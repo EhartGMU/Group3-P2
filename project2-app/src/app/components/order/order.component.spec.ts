@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { OrderComponent } from './order.component';
-import { SharedModule } from '../../shared-module/shared.module';
+import { Directive } from '@angular/core';
 
 describe('OrderComponent', () => {
   let component: OrderComponent;
@@ -9,8 +8,7 @@ describe('OrderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ SharedModule, HttpClientModule ],
-      providers: [ HttpClient]
+      declarations: [ OrderComponent, FakeGetOrderComponent ],
     })
     .compileComponents();
   });
@@ -25,3 +23,6 @@ describe('OrderComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+@Directive({ selector: 'app-getorder' })
+class FakeGetOrderComponent {}

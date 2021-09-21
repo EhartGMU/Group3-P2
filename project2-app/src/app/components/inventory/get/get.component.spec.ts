@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { GetComponent } from './get.component';
-import { SharedModule } from '../../../shared-module/shared.module';
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 describe('GetComponent', () => {
   let component: GetComponent;
@@ -9,9 +9,9 @@ describe('GetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ SharedModule, HttpClientModule ],
+      imports: [ CommonModule ],
       declarations: [ GetComponent ],
-      providers: [ HttpClient]
+      providers: [ {provide:HttpClient, useValue: { get: () => null }} ]
     })
     .compileComponents();
   });
