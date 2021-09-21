@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { OrderComponent } from './order.component';
+import { Directive } from '@angular/core';
 
 describe('OrderComponent', () => {
   let component: OrderComponent;
@@ -8,7 +8,7 @@ describe('OrderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OrderComponent ]
+      declarations: [ OrderComponent, FakeGetOrderComponent ],
     })
     .compileComponents();
   });
@@ -23,3 +23,6 @@ describe('OrderComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+@Directive({ selector: 'app-getorder' })
+class FakeGetOrderComponent {}

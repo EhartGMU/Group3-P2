@@ -51,14 +51,43 @@ namespace P2_Store.Controllers
 
 
         }*/
-
+        
         // POST api/<UserController>
-        [HttpPost]
-        public IActionResult Create([FromBody] User x)
+        [HttpPost("{create}/{x}")]
+        public IActionResult Create([FromBody] User x, bool create)
         {
-            var r = _repo.AddUser(x);
+            User foundUser = _repo.GetUserByEmail(x.Email);
+            bool check;
+            if (create == false)
+            {
+                try
+                {
+                    check = _repo.CheckUserCredentials(x, foundUser);
+                    if (check)
+                    {
+                        return Ok(foundUser);
+                    }
+                } catch(Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+                
+            }
+            else
+            {
+                if(foundUser == null)
+                {
+                    var r = _repo.AddUser(x);
 
-            return Ok(r);
+                }
+                check = _repo.CheckUserCredentials(x, foundUser);
+                if (check == false)
+                _repo.AddUser(x);
+                User foundUser = _repo.GetUserByEmail(x.Email);
+                return Ok(foundUser);
+            }
+
+            return Ok();
         }
 
         // PUT api/<UserController>/5
