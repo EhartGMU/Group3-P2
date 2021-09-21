@@ -41,7 +41,7 @@ namespace P2_Store.Models.Interfaces
         void UpdateProduct(Product rest);
         User GetUserByEmail(string mail);
         void AddProductToOrder(Order order, Product x);
-
+        bool CheckUserCredentials(User user, User attempt);
         Product GetProductById(int id);
     }
 }

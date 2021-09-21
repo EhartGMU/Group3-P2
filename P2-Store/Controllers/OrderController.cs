@@ -40,6 +40,7 @@ namespace P2_Store.Controllers
             try
             {
                 var x = _repo.GetOrderById(id);
+
                 return Ok(x);
             }
 
@@ -48,7 +49,30 @@ namespace P2_Store.Controllers
                 return Ok("It does not exist");
             }
         }
+        [HttpGet("{id}/{comp}")]
+        public IActionResult Get(int id, bool comp)
+        {
+            Order y = new Order();
+            try
+            {
+                List<Order> x = _repo.GetOrderById(id);
+                if(comp == false)
+                {
+                y = x.FirstOrDefault(x => x.IsCompleted == 0);
+                    return Ok(y);
+                }
+                else
+                {
+                return Ok(x);
 
+                }
+            }
+
+            catch
+            {
+                return Ok("It does not exist");
+            }
+        }
 /*        // POST api/<OrderController>
         [HttpPost]
         public IActionResult Create([FromBody] Order x)

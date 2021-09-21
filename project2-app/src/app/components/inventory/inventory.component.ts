@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedModule } from 'src/app/shared-module/shared.module';
+
 
 @Component({
   selector: 'app-inventory',
