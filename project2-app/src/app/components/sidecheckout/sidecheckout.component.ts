@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { SharedService } from 'src/app/shared.service';
 
 @Component({
-  selector: 'app-getorder',
-  templateUrl: './getorder.component.html',
-  styleUrls: ['./getorder.component.css']
+  selector: 'app-sidecheckout',
+  templateUrl: './sidecheckout.component.html',
+  styleUrls: ['./sidecheckout.component.css']
 })
-export class GetorderComponent implements OnInit {
+export class SidecheckoutComponent implements OnInit {
 
   constructor(private service :SharedService) { }
-
   OrderList:any=[];
   ProductList:any=[];
 
@@ -17,9 +16,7 @@ export class GetorderComponent implements OnInit {
     this.RefreshOrderList();
 
     this.RefreshProductList();
-
   }
-
   RefreshOrderList()
   {
     this.service.ListOrders().subscribe(data=>{
@@ -35,5 +32,6 @@ this.ProductList = data;
 
     });
   }  
+
 
 }

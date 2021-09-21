@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { SearchbarComponent } from '../components/searchbar/searchbar.component';
-import { HeaderComponent } from '../components/header/header.component';
+
 import { ProductsComponent } from '../components/products/products.component';
 import { FooterComponent } from '../components/footer/footer.component';
 import { InventoryComponent } from '../components/inventory/inventory.component';
@@ -13,7 +13,7 @@ import { DisplayproductComponent } from '../components/displayproduct/displaypro
 import { GetproductComponent } from '../components/displayproduct/getproduct/getproduct.component';
 
 @NgModule({
-    declarations: [ SearchbarComponent, HeaderComponent, ProductsComponent, FooterComponent, InventoryComponent, GetComponent, AddEditComponent, OrderComponent, GetorderComponent, AddEditorderComponent, DisplayproductComponent, GetproductComponent ],
-    exports: [ SearchbarComponent, HeaderComponent, ProductsComponent, FooterComponent, InventoryComponent, GetComponent, AddEditComponent, OrderComponent, GetorderComponent, AddEditorderComponent, DisplayproductComponent, GetproductComponent ]
+    declarations: [ SearchbarComponent, ProductsComponent, FooterComponent, InventoryComponent, GetComponent, AddEditComponent, OrderComponent, GetorderComponent, AddEditorderComponent, DisplayproductComponent, GetproductComponent ],
+    exports: [ SearchbarComponent, ProductsComponent, FooterComponent, InventoryComponent, GetComponent, AddEditComponent, OrderComponent, GetorderComponent, AddEditorderComponent, DisplayproductComponent, GetproductComponent ]
 })
 export class SharedModule {}
