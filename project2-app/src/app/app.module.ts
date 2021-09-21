@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
 
-import { HeaderComponent } from './components/header/header.component';
+
 
 import { ProductsComponent } from './components/products/products.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -34,7 +34,7 @@ import { GetproductComponent } from './components/displayproduct/getproduct/getp
     AppComponent,
     SearchbarComponent,
    
-    HeaderComponent,
+
     InventoryComponent,
     ProductsComponent,
     FooterComponent,
