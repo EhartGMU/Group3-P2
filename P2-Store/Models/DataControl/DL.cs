@@ -347,12 +347,10 @@ namespace P2_Store.Models.DataControl
             List<Product> newRest = new List<Product>();
             foreach (var k in rest)
             {
-                new Product(k.Id, k.Name, k.Price, k.Quantity, k.OrderId, k.InventoryId);
-
-                return newRest;
-
+                newRest.Add(new Product(k.Id, k.Name, k.Price, k.Quantity, k.OrderId, k.InventoryId));
+               
             }
-            return null;
+            return newRest;
         }
 
         public User GetUserById(int id)
@@ -424,15 +422,27 @@ namespace P2_Store.Models.DataControl
             {
                 User newUser = new User(search.Id, search.FullName, search.Pass, search.Email, search.DateJoined, search.IsAdmin);
                 return newUser;
+            } else
+            {
+                return null;
             }
-            return null;
+
         }
 
         public void AddProductToOrder(Order order, Product x)
         {
             
         }
+        public bool CheckUserCredentials(User user, User attempt)
+        {
+            if(user.Email == attempt.Email && user.Pass == attempt.Pass)
+            {
+                return true;
+            }
+                return false;
+            
 
+        }
 
     };
 
