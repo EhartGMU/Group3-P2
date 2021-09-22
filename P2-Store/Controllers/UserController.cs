@@ -75,6 +75,7 @@ namespace P2_Store.Controllers
             }
             else
             {
+
                 if(foundUser == null)
                 {
                     var r = _repo.AddUser(x);
@@ -83,7 +84,6 @@ namespace P2_Store.Controllers
                 check = _repo.CheckUserCredentials(x, foundUser);
                 if (check == false)
                 _repo.AddUser(x);
-                User foundUser = _repo.GetUserByEmail(x.Email);
                 return Ok(foundUser);
             }
 
@@ -97,6 +97,8 @@ namespace P2_Store.Controllers
             
 
         }
+
+        
         // GET api/<InventoryController>/5
         [HttpGet("{mail}")]
         public IActionResult Get(string mail)
