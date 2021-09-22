@@ -37,11 +37,11 @@ stages:
       displayName: Angular Build/Test
       steps:
       #Restore
-      - task: Npm@1
-        displayName: Restore NPM
-        inputs:
-          command: 'ci'
-          workingDir: '$(angular)'
+      # - task: Npm@1
+      #   displayName: Restore NPM
+      #   inputs:
+      #     command: 'ci'
+      #     workingDir: '$(angular)'
       #Build
       - task: CmdLine@2
         displayName: Angular Build
