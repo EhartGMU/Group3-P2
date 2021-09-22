@@ -188,6 +188,9 @@ namespace P2_Store.Models.DataControl
             _context.SaveChanges();
             return n;
         }
+
+
+        
         public User AddUser(User n)
         {
             var k = _context.Users.FirstOrDefault(x => x.Email == n.Email);
@@ -202,10 +205,11 @@ namespace P2_Store.Models.DataControl
                     FullName = n.FullName,
                     Pass = n.Pass,
                     Email = n.Email,
-                    DateJoined = n.DateJoined,
+                    DateJoined = DateTime.UtcNow,
                     IsAdmin = n.IsAdmin
                 }
             );
+           
             _context.SaveChanges();
             return n;
         }
@@ -324,10 +328,23 @@ namespace P2_Store.Models.DataControl
         }
         public List<Order> GetOrderById(int id)
         {
-
-            var rest = _context.Orders.Where(r => r.UserId == id).ToList();
             List<Order> list = new List<Order>();
-            foreach(var k in rest)
+            var orders = _context.Orders.Where(r => r.UserId == id).ToList();
+
+            foreach(var order in orders)
+            {
+                var products = _context.Products.Where(x => x.OrderId == order.Id);
+
+                order.Total = 0;
+
+
+                foreach(var item in products)
+                {
+                    order.Total += (Convert.ToDecimal(item.Price) * item.Quantity);
+                }
+
+            }
+            foreach(var k in orders)
             {
                 list.Add(new Order
                 {
@@ -337,6 +354,7 @@ namespace P2_Store.Models.DataControl
                     IsCompleted = k.IsCompleted,
                 });
             }
+
             return list;
 
         }
@@ -377,7 +395,7 @@ namespace P2_Store.Models.DataControl
 
         public void UpdateOrder(Order p)
         {
-            var Original = GetOrderById(p.Id);
+            var Original = GetOrderById(p.UserId);
             var newOriginal = Original.FirstOrDefault(x => x.IsCompleted == 0);
             newOriginal.UserId = p.UserId;
             newOriginal.Total = p.Total;
