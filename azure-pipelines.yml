@@ -24,7 +24,7 @@ stages:
         inputs:
             versionSpec: 14.x
       #Install object-hash
-      - task:
+      - task: CmdLine@2
         displayName: Install object-hash
         inputs:
           script: 'npm install object-hash'
