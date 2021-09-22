@@ -23,12 +23,6 @@ stages:
         displayName: Install Node.js
         inputs:
             versionSpec: 14.x
-      #Install object-hash
-      - task: CmdLine@2
-        displayName: Install object-hash
-        inputs:
-          script: 'npm install object-hash'
-          workingDirectory: $(angular)
       #Install Tailwind
       - task: CmdLine@2
         displayName: Install Tailwind css
