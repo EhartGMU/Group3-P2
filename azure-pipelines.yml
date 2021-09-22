@@ -11,7 +11,7 @@ pool:
 variables: #Path to folders
   angular: '$(Build.SourcesDirectory)/project2-app'
 
-stages: 
+stages:
 - stage: Installs
   #Runs NPM Installs
   jobs:
