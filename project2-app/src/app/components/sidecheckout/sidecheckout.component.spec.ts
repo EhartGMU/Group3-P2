@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClient } from '@angular/common/http';
 
 import { SidecheckoutComponent } from './sidecheckout.component';
 
@@ -10,7 +10,9 @@ describe('SidecheckoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SidecheckoutComponent ]
+      declarations: [ SidecheckoutComponent ],
+      providers: [ {provide:HttpClient, useValue: { get: () => null }} ]
+      
     })
     .compileComponents();
   });
