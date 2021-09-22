@@ -33,7 +33,7 @@ stages:
       - task: CmdLine@2
         displayName: Install Tailwind css
         inputs:
-          script: 'npm install -D tailwindcss@latest postcss@latest autoprefixer@latest'
+          script: 'npm install tailwindcss'
           workingDirectory: $(angular)
 
 - stage: Angular_BT
