@@ -57,7 +57,7 @@ namespace P2_Store.Controllers
         [HttpPost("{create}/{x}")]
         public IActionResult Create([FromBody] User x, bool create)
         {
-            User foundUser = _repo.GetUserByEmail(x.Email);
+           User foundUser = _repo.GetUserByEmail(x.Email);
             bool check;
             if (create == false)
             {
@@ -77,8 +77,7 @@ namespace P2_Store.Controllers
             }
             else
             {
-
-                if (foundUser == null)
+                if(foundUser == null)
                 {
                     _repo.AddUser(x);
                 }
@@ -100,6 +99,8 @@ namespace P2_Store.Controllers
             
 
         }
+
+        
         // GET api/<InventoryController>/5
         [HttpGet("{mail}")]
         public IActionResult Get(string mail)
