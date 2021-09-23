@@ -53,6 +53,7 @@ namespace P2_Store.Controllers
         }*/
         
         // POST api/<UserController>
+        
         [HttpPost("{create}/{x}")]
         public IActionResult Create([FromBody] User x, bool create)
         {
@@ -67,15 +68,15 @@ namespace P2_Store.Controllers
                     {
                         return Ok(foundUser);
                     }
-                } catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     Console.WriteLine(e);
                 }
-                
+
             }
             else
             {
-
                 if(foundUser == null)
                 {
                     _repo.AddUser(x);
