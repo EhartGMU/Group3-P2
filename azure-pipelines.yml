@@ -11,7 +11,7 @@ pool:
 variables: #Path to folders
   angular: '$(Build.SourcesDirectory)/project2-app'
 
-stages: 
+stages:
 - stage: Installs
   #Runs NPM Installs
   jobs:
@@ -23,6 +23,12 @@ stages:
         displayName: Install Node.js
         inputs:
             versionSpec: 14.x
+      #Install Tailwind
+      - task: CmdLine@2
+        displayName: Install Tailwind css
+        inputs:
+          script: 'npm install tailwindcss'
+          workingDirectory: $(angular)
 
 - stage: Angular_BT
   jobs:
