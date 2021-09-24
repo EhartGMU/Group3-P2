@@ -1,28 +1,35 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SharedModule } from './shared-module/shared.module';
-
 import { InventoryComponent } from './components/inventory/inventory.component';
 import { ProductsComponent } from './components/products/products.component';
 import { OrderComponent } from './components/order/order.component';
 import { DisplayproductComponent } from './components/displayproduct/displayproduct.component';
 import { SidecheckoutComponent } from './components/sidecheckout/sidecheckout.component';
 
+import { SearchbarComponent } from './components/searchbar/searchbar.component';
+import { SignupComponent } from './components/signup/signup.component';
+
+import { SigninComponent } from './components/signin/signin.component';
 
 
 
 const routes : Routes = [
 
+
+
+  {path: 'searchbar', component: SearchbarComponent},
   {path:'inventory',component: InventoryComponent},
   {path:'order',component:OrderComponent},
   {path:'product',component:DisplayproductComponent},
-  {path:'sidecheckout', component:SidecheckoutComponent}
-
+  {path:'sidecheckout', component:SidecheckoutComponent},
+  
+  {path: 'User/create/false', component:SignupComponent},
+  {path: 'User/create/true', component:SigninComponent}
 
 ];
 
 @NgModule({
-  imports: [SharedModule, RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

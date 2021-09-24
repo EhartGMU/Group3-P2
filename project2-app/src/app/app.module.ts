@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router, RouterModule } from '@angular/router';
-
 import { AppComponent } from './app.component';
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
-
 import { ProductsComponent } from './components/products/products.component';
 import { FooterComponent } from './components/footer/footer.component';
-
 import { InventoryComponent } from './components/inventory/inventory.component';
 import { GetComponent } from './components/inventory/get/get.component';
 import { AddEditComponent } from './components/inventory/add-edit/add-edit.component';
@@ -20,6 +17,14 @@ import { GetorderComponent } from './components/order/getorder/getorder.componen
 import { AddEditorderComponent } from './components/order/add-editorder/add-editorder.component';
 import { DisplayproductComponent } from './components/displayproduct/displayproduct.component';
 import { GetproductComponent } from './components/displayproduct/getproduct/getproduct.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SignupComponent } from './components/signup/signup.component';
+import { SigninComponent } from './components/signin/signin.component';
+
+
+
+
+
 
 @NgModule({
   declarations: [
@@ -35,10 +40,14 @@ import { GetproductComponent } from './components/displayproduct/getproduct/getp
     AddEditorderComponent,
     DisplayproductComponent,
     GetproductComponent,
+    SignupComponent,
+    SigninComponent,
+   
+
   ],
 
 
-  imports: [ BrowserModule, AppRoutingModule, RouterModule,  HttpClientModule, FormsModule, ReactiveFormsModule ],
+  imports: [ BrowserModule, AppRoutingModule, RouterModule,  HttpClientModule, FormsModule, ReactiveFormsModule, NgbModule ],
   providers: [SharedService],
   bootstrap: [AppComponent]
 })

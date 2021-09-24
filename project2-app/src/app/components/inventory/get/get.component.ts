@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { SharedService } from 'src/app/shared.service';
+import { Category } from '../../interfaces/category';
 
 
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -9,15 +11,28 @@ import { SharedService } from 'src/app/shared.service';
   templateUrl: './get.component.html',
   styleUrls: ['./get.component.css']
 })
+
 export class GetComponent implements OnInit {
 
-  constructor(private service :SharedService) { }
+  form: FormGroup = new FormGroup ( 
+    {
+      subject: new FormControl('')
+    });
+
+  constructor(private service :SharedService, private formBuilder: FormBuilder) { }
 
   InventoryList:any=[];
- 
+
+  categories: Category[] | null = null ;
 
   ngOnInit(): void {
     this.refreshinvList();
+    this.GetCategory();
+    
+    this.form = this.formBuilder.group({
+      subject:['']
+    });
+
   }
 
  
@@ -28,4 +43,28 @@ this.InventoryList = data;
 
     });
   }  
+
+
+  GetCategory()
+  {
+    this.service.ListCategory().subscribe((categories) => {
+      this.categories = categories;
+    });
+
+  }
+
+  get f() { return this.form.controls; }
+
+
+  onSubmit()
+  {
+    
+
+    this.service.AddCategory(this.form.value).subscribe(
+      res => {
+        alert("Category  successfully added!");
+      });
+
+
+}
 }
