@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Category } from './components/interfaces/category';
+import { User } from './components/interfaces/user';
+
 
 @Injectable({
   providedIn: 'root'
@@ -36,8 +38,8 @@ export class SharedService {
   }
 
 
-  RegisterUser(val:any){
-    return this.https.post<any>(this.APIUrl+'/User/create/true', val);
+  RegisterUser(user : User):Observable<User> {
+    return this.https.post<User>(this.APIUrl+'/User/create/true', user);
   }
 
   ListOrders():Observable<any[]>{

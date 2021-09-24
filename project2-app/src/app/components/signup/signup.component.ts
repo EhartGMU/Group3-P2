@@ -1,48 +1,54 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { SharedService } from 'src/app/shared.service';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
+
+
+
+
 export class SignupComponent implements OnInit {
 
+  form: FormGroup = new FormGroup ( 
+    {
+      id!: new FormControl(''),
+      fullName: new FormControl(''),
+      pass: new FormControl(''),
+      email: new FormControl(''),
+      dateJoined!: new FormControl(''),
+      isAdmin!: new FormControl('')
+    });
+    
+  constructor( private service :SharedService, private formBuilder: FormBuilder) { }
 
-  constructor( private service :SharedService) { }
 
-  @Input() t:any;
-
-  id!: number;
-  fullname!: string;
-  pass!: string;
-  email!: string;
-  datejoined!: string;
-  isadmin!: number;
 
 
   ngOnInit(): void {
-    this.id= this.t.id;
-    this.fullname=this.t.fullname;
-    this.pass= this.t.pass;
-    
+    this.form = this.formBuilder.group({
+      id!:[''],
+      fullName:[''],
+      pass: [''],
+      email: [''],
+      dateJoined!:[''],
+      isAdmin!:['']
+    })
   }
-
   
-  RegisterUser()
+  get f() { return this.form.controls; }
+
+
+  onSubmit()
   {
-    var val= {id: this.id,
-      fullname: this.fullname,
-      pass: this.pass,
-      email: this.email,
-      datejoined: this.datejoined,
-      isadmin: this.isadmin};
-
-    this.service.RegisterUser(val).subscribe(res=> {
-      alert(res.toString());
-    });
-
-   
-  }  
+    this.service.RegisterUser(this.form.value).subscribe(
+      res => {
+        alert("Attempting to register User successfully added!");
+        
+      });
+}
 }
