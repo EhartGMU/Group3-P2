@@ -21,8 +21,8 @@ export class SharedService {
     return this.https.get<any>(this.APIUrl+'/User');
   }
 
-  LoginUser():Observable<any[]>{
-    return this.https.get<any>(this.APIUrl+'/User/create/false');
+  LoginUser(user : User):Observable<User>{
+    return this.https.post<User>(this.APIUrl+'/User/false', user);
   }
 
 
@@ -39,7 +39,7 @@ export class SharedService {
 
 
   RegisterUser(user : User):Observable<User> {
-    return this.https.post<User>(this.APIUrl+'/User/create/true', user);
+    return this.https.post<User>(this.APIUrl+'/User/true', user);
   }
 
   ListOrders():Observable<any[]>{

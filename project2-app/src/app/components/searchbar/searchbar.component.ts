@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { SharedService } from 'src/app/shared.service';
+import { SigninComponent } from '../signin/signin.component';
+import { SignupComponent } from '../signup/signup.component';
+
 
 @Component({
   selector: 'app-searchbar',
@@ -11,23 +14,22 @@ import { SharedService } from 'src/app/shared.service';
 
 export class SearchbarComponent implements OnInit {
 
- 
-    closeResult = '';
-    
 
-  constructor( private modalService: NgbModal, private service:SharedService) { }
+  closeResult = '';
 
-  Register:any=[];
-  ActivateSignupComp:boolean=false;
-  t:any;
+
+  constructor(private modalService: NgbModal, private service: SharedService) { }
+
+  ActivateSignupComp: boolean = false;
+  t: any;
 
 
   ngOnInit(): void {
-    
+
   }
 
-  open2(content2: any) {
-    this.modalService.open(content2, {ariaLabelledBy: 'modal-basic-titlesignin'}).result.then((result) => {
+  openSignInModal() {
+    this.modalService.open(SigninComponent, { ariaLabelledBy: 'modal-basic-titlesignin' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -35,18 +37,11 @@ export class SearchbarComponent implements OnInit {
   }
 
 
-  open(content: any) {
-    this.t={
-      id:0,
-      fullname:"",
-      pass:"",
-      email:"",
-      datejoined:"",
-      isadmin:""
+  openSignUpModal() {
 
-    }
-    this.ActivateSignupComp=true;
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.ActivateSignupComp = true;
+    this.modalService.open(SignupComponent).result.then((result) => {
+
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -65,6 +60,6 @@ export class SearchbarComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-  
- 
+
+
 }
