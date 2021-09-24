@@ -54,7 +54,7 @@ namespace P2_Store.Controllers
         
         // POST api/<UserController>
         
-        [HttpPost("{create}/{x}")]
+        [HttpPost("{create}")]
         public IActionResult Create([FromBody] User x, bool create)
         {
            User foundUser = _repo.GetUserByEmail(x.Email);
