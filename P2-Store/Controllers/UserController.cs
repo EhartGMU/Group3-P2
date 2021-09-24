@@ -53,10 +53,11 @@ namespace P2_Store.Controllers
         }*/
         
         // POST api/<UserController>
+        
         [HttpPost("{create}/{x}")]
         public IActionResult Create([FromBody] User x, bool create)
         {
-            User foundUser = _repo.GetUserByEmail(x.Email);
+           User foundUser = _repo.GetUserByEmail(x.Email);
             bool check;
             if (create == false)
             {
@@ -67,27 +68,28 @@ namespace P2_Store.Controllers
                     {
                         return Ok(foundUser);
                     }
-                } catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     Console.WriteLine(e);
                 }
-                
+
             }
             else
             {
-
                 if(foundUser == null)
                 {
-                    var r = _repo.AddUser(x);
-
+                    _repo.AddUser(x);
                 }
-                check = _repo.CheckUserCredentials(x, foundUser);
-                if (check == false)
-                _repo.AddUser(x);
-                return Ok(foundUser);
+                else
+                {
+                    return Ok("A user with that email already exists");
+                }
+                User createdUser = _repo.GetUserByEmail(x.Email);
+                return Ok(createdUser);
             }
 
-            return Ok();
+            return Ok("Incorrect user information");
         }
 
         // PUT api/<UserController>/5
