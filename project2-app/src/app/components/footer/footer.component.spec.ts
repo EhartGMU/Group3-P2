@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SharedModule } from '../../shared-module/shared.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FooterComponent } from './footer.component';
 
@@ -9,7 +8,7 @@ describe('FooterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ SharedModule, HttpClientModule ],
+      imports: [ HttpClientModule ],
       declarations: [ FooterComponent ],
       providers: [ HttpClient]
     })
