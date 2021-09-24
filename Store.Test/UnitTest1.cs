@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace Store.test
+namespace Store.Test
 {
     public class UnitTest1
     {
