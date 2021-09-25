@@ -17,6 +17,7 @@ export class SidecheckoutComponent implements OnInit {
 
     this.RefreshProductList();
   }
+  
   RefreshOrderList()
   {
     this.service.ListOrders().subscribe(data=>{
