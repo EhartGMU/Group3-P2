@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Category } from './components/interfaces/category';
 import { User } from './components/interfaces/user';
+import { LogInRequest } from './user/user.service';
 
 
 @Injectable({
@@ -21,8 +22,8 @@ export class SharedService {
     return this.https.get<any>(this.APIUrl+'/User');
   }
 
-  LoginUser(user : User):Observable<User>{
-    return this.https.post<User>(this.APIUrl+'/User/false', user);
+  LoginUser(logInRequest : LogInRequest):Observable<User>{
+    return this.https.post<User>(this.APIUrl+'/User/false', logInRequest);
   }
 
 

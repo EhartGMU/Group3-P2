@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SharedService } from 'src/app/shared.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { LogInRequest, UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-signin',
@@ -12,7 +13,7 @@ import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-
 
 export class SigninComponent implements OnInit {
 
-  constructor(private service: SharedService, private formBuilder: FormBuilder, public modal: NgbActiveModal) { }
+  constructor(private service: UserService, private formBuilder: FormBuilder, public modal: NgbActiveModal) { }
 
   form: FormGroup = new FormGroup(
     {
@@ -34,11 +35,12 @@ export class SigninComponent implements OnInit {
   get f() { return this.form.controls; }
 
   onSubmit() {
-    this.service.LoginUser(this.form.value).subscribe(
-      res => {
-        console.log("User logged in!");
-
-      });
+    const request: LogInRequest = {
+      email: this.form.value.email,
+      pass: this.form.value.pass
+      
+    }
+    this.service.logIn(request.email, request.pass);
   }
 
 }

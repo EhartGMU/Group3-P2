@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { SharedService } from 'src/app/shared.service';
+import { UserService } from 'src/app/user/user.service';
 import { SigninComponent } from '../signin/signin.component';
 import { SignupComponent } from '../signup/signup.component';
 
@@ -18,10 +19,9 @@ export class SearchbarComponent implements OnInit {
   closeResult = '';
 
 
-  constructor(private modalService: NgbModal, private service: SharedService) { }
+  constructor(private modalService: NgbModal, private service: SharedService, public userService: UserService) { }
 
   ActivateSignupComp: boolean = false;
-  t: any;
 
 
   ngOnInit(): void {
