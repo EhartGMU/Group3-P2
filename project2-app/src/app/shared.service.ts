@@ -48,7 +48,7 @@ export class SharedService {
   }
 
   ListProduct():Observable<any[]>{
-    return this.https.get<any>(this.APIUrl+'/product');
+    return this.https.get<any>(this.APIUrl+'/Product');
   }
 
 

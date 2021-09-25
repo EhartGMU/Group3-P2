@@ -26,8 +26,6 @@
               </div>
             </div>
 
-
-
             <div class="mt-8">
 
               <a *ngFor="let dataItem of ProductList">
@@ -48,20 +46,20 @@
                           <div class="flex justify-between text-base font-medium text-gray-900">
                             <h3>
                               <a href="#">
-                               
+                               {{dataItem.name}}
                               </a>
                             </h3>
                             <p class="ml-4">
-                              {{dataItem.total}}
+                              {{dataItem.price}}
                             </p>
                           </div>
                           <p class="mt-1 text-sm text-gray-500">
-                            Salmon
+                            
                           </p>
                         </div>
                         <div class="flex-1 flex items-end justify-between text-sm">
                           <p class="text-gray-500">
-                            Qty 1
+                            Quantity: {{dataItem.quantity}}
                           </p>
 
                           <div class="flex">
