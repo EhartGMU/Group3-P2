@@ -16,3 +16,10 @@
 .min-h-screen {
     min-height: 5vh;
 }
+.col, .col-1, .col-10, .col-11, .col-12{
+    position: inherit;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}

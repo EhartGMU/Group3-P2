@@ -22,6 +22,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { CookieService } from 'ngx-cookie-service';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap'
+import { SidecheckoutComponent } from './components/sidecheckout/sidecheckout.component';
 
 
 
@@ -42,6 +43,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap'
     GetproductComponent,
     SignupComponent,
     SigninComponent,
+    SidecheckoutComponent,
 
    
 

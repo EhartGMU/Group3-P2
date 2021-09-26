@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Category } from './components/interfaces/category';
 import { User } from './components/interfaces/user';
 import { LogInRequest } from './user/user.service';
+import { Product } from './components/interfaces/product';
 
 
 @Injectable({
@@ -48,10 +49,12 @@ export class SharedService {
   }
 
   ListProduct():Observable<any[]>{
-    return this.https.get<any>(this.APIUrl+'/product');
+    return this.https.get<any>(this.APIUrl+'/Product');
   }
 
-
+  addProduct(product : Product):Observable<Product> {
+    return this.https.post<Product>(this.APIUrl+'/Product',product)
+  }
 
   addInventory(val:any){
     return this.https.post(this.APIUrl+'/inventory',val)

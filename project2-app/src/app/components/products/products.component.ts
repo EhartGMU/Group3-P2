@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from 'src/app/shared.service';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -9,12 +10,25 @@ import { SharedService } from 'src/app/shared.service';
 })
 export class ProductsComponent implements OnInit {
 
-  constructor(private service :SharedService) { }
+  form: FormGroup = new FormGroup ( 
+    {
+      name: new FormControl(''),
+      price: new FormControl(''),
+      quantity: new FormControl('')
+
+    });
+
+  constructor(private service :SharedService, private formBuilder: FormBuilder) { }
 
   InventoryList:any=[];
 
   ngOnInit(): void {
     this.refreshinvList();
+    this.form = this.formBuilder.group({
+      name:[''],
+      price:[''],
+      quantity:['']
+    });
   }
 
   refreshinvList()
@@ -24,5 +38,16 @@ this.InventoryList = data;
 
     });
   }  
+
+  onSubmit()
+  {
+    
+    this.service.addProduct(this.form.value).subscribe(
+      res => {
+        alert("Category  successfully added!");
+      });
+
+
+}
 
 }
