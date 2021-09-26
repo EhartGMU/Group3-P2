@@ -15,9 +15,10 @@ export class SidecheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.RefreshOrderList();
-    this.refreshinvList();
+ 
 
     this.RefreshProductList();
+
   }
 
   RefreshOrderList()
@@ -36,13 +37,7 @@ this.ProductList = data;
     });
   }  
 
-  refreshinvList()
-  {
-    this.service.ListInventory().subscribe(data=>{
-this.InventoryList = data;
-
-    });
-  }  
+ 
 
 
 }

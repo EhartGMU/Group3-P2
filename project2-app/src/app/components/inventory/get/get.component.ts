@@ -59,12 +59,9 @@ this.InventoryList = data;
   onSubmit()
   {
     
-
     this.service.AddCategory(this.form.value).subscribe(
       res => {
         alert("Category  successfully added!");
       });
-
-
 }
 }
