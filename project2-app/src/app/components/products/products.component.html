@@ -12,8 +12,7 @@
 
             <a *ngFor="let dataItem of InventoryList">
 
-                <form class="signup-form" [formGroup]="form" (ngSubmit)="onSubmit(dataItem)"
-                   >
+                <form class="signup-form" (ngSubmit)="onSubmit(dataItem)">
 
                     <div class="col mb-5">
 

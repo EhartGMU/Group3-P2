@@ -2,7 +2,6 @@ import { Component, OnInit,Input } from '@angular/core';
 import { SharedService } from 'src/app/shared.service';
 import { Product } from '../interfaces/product';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Product } from '../interfaces/product';
 import { UserService } from 'src/app/user/user.service';
 import { User } from '../interfaces/user';
 import { Inventory } from '../interfaces/inventory';
@@ -48,17 +47,23 @@ export class ProductsComponent implements OnInit {
   }
 
   onSubmit(dataItem: Inventory) {
-    console.log(this.form.value.inventoryId);
+
+    console.log(dataItem);
     this.userService.user$.subscribe(user => {
+      console.log(user);
       this.service.GetUserOrder(user.id).subscribe(order => {
+        console.log(order);
         const product: Product = {
-          name: this.form.value.name,
-          price: this.form.value.price,
-          quantity: this.form.value.quantity,
+          name: dataItem.name,
+          price: dataItem.price,
+          quantity: 1,
           inventoryId: dataItem.id,
           orderId: order.id,
+          
         
         };
+        console.log(order, "order");
+        console.log(product);
         this.service.addProduct(product).subscribe(
           res => {
             alert("Category  successfully added!");
