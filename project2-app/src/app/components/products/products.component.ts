@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from 'src/app/shared.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Product } from '../interfaces/product';
+import { UserService } from 'src/app/user/user.service';
+import { User } from '../interfaces/user';
+
 
 
 @Component({
@@ -10,7 +14,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 })
 export class ProductsComponent implements OnInit {
 
-  form: FormGroup = new FormGroup ( 
+  form: FormGroup = new FormGroup(
     {
       name: new FormControl(''),
       price: new FormControl(''),
@@ -18,36 +22,44 @@ export class ProductsComponent implements OnInit {
 
     });
 
-  constructor(private service :SharedService, private formBuilder: FormBuilder) { }
+  constructor(private service: SharedService, private formBuilder: FormBuilder, private userService: UserService) { }
 
-  InventoryList:any=[];
-
+  InventoryList: any = [];
   ngOnInit(): void {
     this.refreshinvList();
     this.form = this.formBuilder.group({
-      name:[''],
-      price:[''],
-      quantity:['']
+      name: [''],
+      price: [''],
+      quantity: [''],
+      inventoryId: ['']
+
     });
   }
 
-  refreshinvList()
-  {
-    this.service.ListInventory().subscribe(data=>{
-this.InventoryList = data;
+  refreshinvList() {
+    this.service.ListInventory().subscribe(data => {
+      this.InventoryList = data;
 
     });
-  }  
+  }
 
-  onSubmit()
-  {
-    
-    this.service.addProduct(this.form.value).subscribe(
-      res => {
-        alert("Category  successfully added!");
-      });
+  onSubmit() {
+    console.log(this.form.value.inventoryId);
+    this.userService.user$.subscribe(user => {
+      this.service.GetUserOrder(user.id).subscribe(order => {
+        const product: Product = {
+          name: this.form.value.name,
+          price: this.form.value.price,
+          quantity: this.form.value.quantity,
+          inventoryId: this.form.value.id,
+          orderId: order.id,
 
-
-}
-
+        };
+        this.service.addProduct(product).subscribe(
+          res => {
+            alert("Category  successfully added!");
+          });
+      })
+    })
+  }
 }

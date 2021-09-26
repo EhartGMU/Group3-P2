@@ -27,20 +27,17 @@ export class SigninComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      pass: [''],
-      email: [''],
-    })
+
   }
-  get f() { return this.form.controls; }
 
   onSubmit() {
     const request: LogInRequest = {
+      
       email: this.form.value.email,
       pass: this.form.value.pass
-      
     }
     this.service.logIn(request.email, request.pass);
-  }
+    this.modal.close(200);
 
+  }
 }

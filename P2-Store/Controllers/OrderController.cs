@@ -70,7 +70,7 @@ namespace P2_Store.Controllers
 
             catch
             {
-                return Ok("It does not exist");
+                return NotFou("It does not exist");
             }
         }
 /*        // POST api/<OrderController>

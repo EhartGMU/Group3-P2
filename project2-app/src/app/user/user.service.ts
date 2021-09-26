@@ -21,15 +21,11 @@ export class UserService {
 
     }).subscribe(user => {
       this.userSubject.next(user);
-
-
-      setTimeout(() => {
-        //user.fullName = "2";
-        this.userSubject.next(user)
-        
-
-      }, 5000)
+      
     })
+  }
+  logOut() {
+    this.userSubject.next(undefined);
   }
 }
 

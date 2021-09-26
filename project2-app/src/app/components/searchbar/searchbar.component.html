@@ -24,7 +24,7 @@
 
       </li>
     <li *ngIf="userService.user$ | async as user" >
-      {{user.fullName}}
+      {{user.fullName}} {{user.id}}
     </li>
 
     </ul>

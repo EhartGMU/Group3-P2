@@ -40,7 +40,7 @@ export class SignupComponent implements OnInit {
   {
     this.service.RegisterUser(this.form.value).subscribe(
       res => {
-        this.modal.close();
+        this.modal.close(200);
         // this.modal.dismiss(200);
         console.log("Adding user to DB")
         
