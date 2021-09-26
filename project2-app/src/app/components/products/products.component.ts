@@ -58,12 +58,8 @@ export class ProductsComponent implements OnInit {
           price: dataItem.price,
           quantity: 1,
           inventoryId: dataItem.id,
-          orderId: order.id,
-          
-        
+          orderId: order.id
         };
-        console.log(order, "order");
-        console.log(product);
         this.service.addProduct(product).subscribe(
           res => {
             alert("Category  successfully added!");

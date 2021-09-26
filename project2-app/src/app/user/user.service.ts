@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { User } from '../components/interfaces/user';
 import { SharedService } from '../shared.service';
+import { shareReplay } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { SharedService } from '../shared.service';
 export class UserService {
 
   private userSubject: Subject<User> = new Subject();
-  user$: Observable<User> = this.userSubject.asObservable();
+  user$: Observable<User> = this.userSubject.asObservable().pipe(shareReplay());
 
   constructor(private sharedService: SharedService) { }
 
