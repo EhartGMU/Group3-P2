@@ -1,18 +1,19 @@
 <section class="py-5">
-    <form class="signup-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="container px-4 px-lg-5 mt-5">
+        <!-- Product reviews-->
+        <div class="d-flex justify-content-center small text-warning mb-2">
+            <div class="bi-star-fill"></div>
+            <div class="bi-star-fill"></div>
+            <div class="bi-star-fill"></div>
+            <div class="bi-star-fill"></div>
 
-        <div class="container px-4 px-lg-5 mt-5">
-            <!-- Product reviews-->
-            <div class="d-flex justify-content-center small text-warning mb-2">
-                <div class="bi-star-fill"></div>
-                <div class="bi-star-fill"></div>
-                <div class="bi-star-fill"></div>
-                <div class="bi-star-fill"></div>
+        </div>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
-            </div>
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <a *ngFor="let dataItem of InventoryList">
 
-                <a *ngFor="let dataItem of InventoryList">
+                <form class="signup-form" [formGroup]="form" (ngSubmit)="onSubmit(dataItem)"
+                   >
 
                     <div class="col mb-5">
 
@@ -39,4 +40,8 @@
                             </div>
                         </div>
                     </div>
-                </a>
+                </form>
+            </a>
+        </div>
+    </div>
+</section>

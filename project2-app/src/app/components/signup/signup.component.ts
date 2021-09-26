@@ -35,15 +35,13 @@ export class SignupComponent implements OnInit {
 
   get f() { return this.form.controls; }
 
-
   onSubmit()
   {
     this.service.RegisterUser(this.form.value).subscribe(
       res => {
         this.modal.close(200);
         // this.modal.dismiss(200);
-        console.log("Adding user to DB")
-        
+        console.log("Adding user to DB")  
       });
 }
 }

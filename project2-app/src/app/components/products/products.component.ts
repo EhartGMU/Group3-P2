@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { SharedService } from 'src/app/shared.service';
+import { Product } from '../interfaces/product';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Product } from '../interfaces/product';
 import { UserService } from 'src/app/user/user.service';
 import { User } from '../interfaces/user';
+import { Inventory } from '../interfaces/inventory';
 
 
 
@@ -18,11 +20,13 @@ export class ProductsComponent implements OnInit {
     {
       name: new FormControl(''),
       price: new FormControl(''),
-      quantity: new FormControl('')
-
+      quantity: new FormControl(1),
+      orderId: new FormControl(10),
+      inventoryId: new FormControl(15),
     });
 
   constructor(private service: SharedService, private formBuilder: FormBuilder, private userService: UserService) { }
+
 
   InventoryList: any = [];
   ngOnInit(): void {
@@ -43,7 +47,7 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(dataItem: Inventory) {
     console.log(this.form.value.inventoryId);
     this.userService.user$.subscribe(user => {
       this.service.GetUserOrder(user.id).subscribe(order => {
@@ -51,9 +55,9 @@ export class ProductsComponent implements OnInit {
           name: this.form.value.name,
           price: this.form.value.price,
           quantity: this.form.value.quantity,
-          inventoryId: this.form.value.id,
+          inventoryId: dataItem.id,
           orderId: order.id,
-
+        
         };
         this.service.addProduct(product).subscribe(
           res => {
