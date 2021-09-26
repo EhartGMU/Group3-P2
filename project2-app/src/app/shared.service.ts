@@ -5,6 +5,7 @@ import { Category } from './components/interfaces/category';
 import { User } from './components/interfaces/user';
 import { LogInRequest } from './user/user.service';
 import { Product } from './components/interfaces/product';
+import { UserService } from './user/user.service';
 
 
 @Injectable({
@@ -36,9 +37,10 @@ export class SharedService {
   
   AddCategory(category : Category):Observable<Category> {
     return this.https.post<Category>(this.APIUrl + '/category',category)
-
   }
-
+  addProduct(product : Product):Observable<Product> {
+    return this.https.post<Product>(this.APIUrl+'/product', product)
+  }
 
   RegisterUser(user : User):Observable<User> {
     return this.https.post<User>(this.APIUrl+'/User/true', user);
@@ -52,9 +54,7 @@ export class SharedService {
     return this.https.get<any>(this.APIUrl+'/Product');
   }
 
-  addProduct(product : Product):Observable<Product> {
-    return this.https.post<Product>(this.APIUrl+'/Product',product)
-  }
+  
 
   addInventory(val:any){
     return this.https.post(this.APIUrl+'/inventory',val)
