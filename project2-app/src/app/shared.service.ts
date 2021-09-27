@@ -7,6 +7,7 @@ import { LogInRequest } from './user/user.service';
 import { Product } from './components/interfaces/product';
 import { Order } from './components/interfaces/order';
 import { UserService } from './user/user.service';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -14,7 +15,7 @@ import { UserService } from './user/user.service';
   providedIn: 'root'
 })
 export class SharedService {
-  readonly APIUrl="https://localhost:44357/api";
+  private readonly APIUrl=environment.dbURL;
 
   constructor(private https:HttpClient) { }
 
