@@ -14,18 +14,20 @@
       <li>
         <button routerLink="order"> Order</button>
       </li>
-
-      <li>
+      <li *ngIf="!userService.user$ | async as user">
         <button (click)="openSignUpModal()">Sign Up</button>
       </li>
 
       <li>
         <button (click)="openSignInModal()"> Sign In </button>
-
       </li>
-    <li *ngIf="userService.user$ | async as user" >
-      {{user.fullName}} {{user.id}}
-    </li>
+      <li *ngIf="userService.user$ | async as user">
+        <h2>{{user.fullName}}</h2>
+        <button (click)="signOut()"> Sign Out</button>
+      </li>
+      <li *ngIf="!userService.user$ | async as user">
+        hihihihihi
+      </li>
 
     </ul>
 
