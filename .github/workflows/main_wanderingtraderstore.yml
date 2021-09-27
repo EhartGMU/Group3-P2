@@ -7,11 +7,12 @@ on:
   push:
     branches:
       - main
+      - 'project2-app/**'
   workflow_dispatch:
   
 env:
   AZURE_WEBAPP_NAME: WanderingTraderStore    # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: 'Group3-P2/dist/project2-app'      # set this to the path to your web app project, defaults to the repository root
+  AZURE_WEBAPP_PACKAGE_PATH: 'project2-app/dist/project2-app'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '14.x'                # set this to the node version to use
 
 jobs:
