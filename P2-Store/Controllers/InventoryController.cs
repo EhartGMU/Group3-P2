@@ -62,7 +62,7 @@ namespace P2_Store.Controllers
 
         // PUT api/<InventoryController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Inventory n)
+        public IActionResult Put(int id, [FromBody] Inventory n)
         {
             _repo.UpdateInventory(n);
 
