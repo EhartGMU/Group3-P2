@@ -11,12 +11,16 @@ export class SidecheckoutComponent implements OnInit {
   constructor(private service :SharedService) { }
   OrderList:any=[];
   ProductList:any=[];
+  InventoryList: any=[];
 
   ngOnInit(): void {
     this.RefreshOrderList();
+ 
 
     this.RefreshProductList();
+
   }
+
   RefreshOrderList()
   {
     this.service.ListOrders().subscribe(data=>{
@@ -32,6 +36,8 @@ this.ProductList = data;
 
     });
   }  
+
+ 
 
 
 }

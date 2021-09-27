@@ -17,11 +17,12 @@ import { GetorderComponent } from './components/order/getorder/getorder.componen
 import { AddEditorderComponent } from './components/order/add-editorder/add-editorder.component';
 import { DisplayproductComponent } from './components/displayproduct/displayproduct.component';
 import { GetproductComponent } from './components/displayproduct/getproduct/getproduct.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SignupComponent } from './components/signup/signup.component';
 import { SigninComponent } from './components/signin/signin.component';
-
-
+import { CookieService } from 'ngx-cookie-service';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap'
+import { SidecheckoutComponent } from './components/sidecheckout/sidecheckout.component';
 
 
 
@@ -42,13 +43,15 @@ import { SigninComponent } from './components/signin/signin.component';
     GetproductComponent,
     SignupComponent,
     SigninComponent,
+    SidecheckoutComponent,
+
    
 
   ],
 
 
-  imports: [ BrowserModule, AppRoutingModule, RouterModule,  HttpClientModule, FormsModule, ReactiveFormsModule, NgbModule ],
-  providers: [SharedService],
+  imports: [ BrowserModule, AppRoutingModule, RouterModule,  HttpClientModule, FormsModule, ReactiveFormsModule, NgbModule, NgbModalModule ],
+  providers: [SharedService, CookieService, NgbActiveModal],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

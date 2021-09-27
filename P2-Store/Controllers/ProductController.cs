@@ -54,19 +54,19 @@ namespace P2_Store.Controllers
 
         // POST api/<ProductController>
         [HttpPost]
-        public IActionResult Create (int userId, [FromBody] Product x )
+        public IActionResult Create ( [FromBody] Product x )
         {
-            var foundOrder = _repo.GetOrderById(userId);
-            var newOrder = foundOrder.FirstOrDefault(x => x.IsCompleted == 0);
-            var order = new Order { IsCompleted = newOrder.IsCompleted, UserId = newOrder.UserId, Id = newOrder.Id, Total = newOrder.Total };
-            if(foundOrder != null)
-            {
-                _repo.AddProductToOrder(newOrder, x);
-            }
-            else if(foundOrder == null)
-            {
-                _repo.AddOrder(userId);
-            }
+            //var foundOrder = _repo.GetOrderById(userId);
+            //var newOrder = foundOrder.FirstOrDefault(x => x.IsCompleted == 0);
+            //var order = new Order { IsCompleted = newOrder.IsCompleted, UserId = newOrder.UserId, Id = newOrder.Id, Total = newOrder.Total };
+            //if(foundOrder != null)
+            //{
+            //    _repo.AddProductToOrder(newOrder, x);
+            //}
+            //else if(foundOrder == null)
+            //{
+            //    _repo.AddOrder(userId);
+            //}
             var r = _repo.AddProduct(x);
 
             return Ok(r);
