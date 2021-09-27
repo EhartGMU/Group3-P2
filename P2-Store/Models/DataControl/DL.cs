@@ -330,8 +330,12 @@ namespace P2_Store.Models.DataControl
         {
             List<Order> list = new List<Order>();
             var orders = _context.Orders.Where(r => r.UserId == id).ToList();
-
-            foreach(var order in orders)
+            if(orders == null)
+            {
+                AddOrder(id);
+            }
+            orders = _context.Orders.Where(r => r.UserId == id).ToList();
+            foreach (var order in orders)
             {
                 var products = _context.Products.Where(x => x.OrderId == order.Id);
 
@@ -340,7 +344,7 @@ namespace P2_Store.Models.DataControl
 
                 foreach(var item in products)
                 {
-                    order.Total += (Convert.ToDecimal(item.Price) * item.Quantity);
+                    order.Total += Convert.ToDecimal(item.Price) * item.Quantity;
                 }
 
             }

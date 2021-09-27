@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ProductsComponent } from './products.component';
 import { Observable, of } from 'rxjs';
 import { SharedService } from 'src/app/shared.service';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 describe('ProductsComponent', () => {
   let component: ProductsComponent;
@@ -17,6 +18,7 @@ describe('ProductsComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [ ProductsComponent ],
+      imports: [ ReactiveFormsModule, FormsModule  ],
       providers: [
         { provide: SharedService, useValue: fakeSvc }
       ]

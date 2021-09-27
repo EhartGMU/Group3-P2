@@ -16,7 +16,7 @@ export class GetComponent implements OnInit {
 
   form: FormGroup = new FormGroup ( 
     {
-      subject: new FormControl('')
+      subject: new FormControl('hello hello')
     });
 
   constructor(private service :SharedService, private formBuilder: FormBuilder) { }
@@ -29,9 +29,9 @@ export class GetComponent implements OnInit {
     this.refreshinvList();
     this.GetCategory();
     
-    this.form = this.formBuilder.group({
-      subject:['']
-    });
+    // this.form = this.formBuilder.group({
+    //   subject:['']
+    // });
 
   }
 
@@ -53,18 +53,15 @@ this.InventoryList = data;
 
   }
 
-  get f() { return this.form.controls; }
+// get f() { return this.form.controls; }
 
 
   onSubmit()
   {
     
-
     this.service.AddCategory(this.form.value).subscribe(
       res => {
         alert("Category  successfully added!");
       });
-
-
 }
 }

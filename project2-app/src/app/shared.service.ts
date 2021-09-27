@@ -2,12 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Category } from './components/interfaces/category';
+import { User } from './components/interfaces/user';
+import { LogInRequest } from './user/user.service';
+import { Product } from './components/interfaces/product';
+import { Order } from './components/interfaces/order';
+import { UserService } from './user/user.service';
+import { environment } from 'src/environments/environment';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
-  readonly APIUrl="https://localhost:44357/api";
+  private readonly APIUrl=environment.dbURL;
 
   constructor(private https:HttpClient) { }
 
@@ -19,8 +27,8 @@ export class SharedService {
     return this.https.get<any>(this.APIUrl+'/User');
   }
 
-  LoginUser():Observable<any[]>{
-    return this.https.get<any>(this.APIUrl+'/User/create/false');
+  LoginUser(logInRequest : LogInRequest):Observable<User>{
+    return this.https.post<User>(this.APIUrl+'/User/false', logInRequest);
   }
 
 
@@ -32,12 +40,14 @@ export class SharedService {
   
   AddCategory(category : Category):Observable<Category> {
     return this.https.post<Category>(this.APIUrl + '/category',category)
-
+  }
+  addProduct(product : Product):Observable<Product> {
+    console.log(product);
+    return this.https.post<Product>(this.APIUrl+'/product', product)
   }
 
-
-  RegisterUser(val:any){
-    return this.https.post<any>(this.APIUrl+'/User/create/true', val);
+  RegisterUser(user : User):Observable<User> {
+    return this.https.post<User>(this.APIUrl+'/User/true', user);
   }
 
   ListOrders():Observable<any[]>{
@@ -45,13 +55,16 @@ export class SharedService {
   }
 
   ListProduct():Observable<any[]>{
-    return this.https.get<any>(this.APIUrl+'/product');
+    return this.https.get<any>(this.APIUrl+'/Product');
+  }
+  addInventory(val:any){
+    return this.https.post(this.APIUrl+'/inventory',val);
   }
 
+  GetUserOrder(id: number){
+    console.log(id);
+    return this.https.get<Order>(`${this.APIUrl}/order/${id}/false`);
 
-
-  addInventory(val:any){
-    return this.https.post(this.APIUrl+'/inventory',val)
   }
 
 }

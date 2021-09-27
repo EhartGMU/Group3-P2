@@ -15,9 +15,7 @@ import { SigninComponent } from './components/signin/signin.component';
 
 const routes : Routes = [
 
-
-
-  {path: 'searchbar', component: SearchbarComponent},
+  {path:'searchbar', component: SearchbarComponent},
   {path:'inventory',component: InventoryComponent},
   {path:'order',component:OrderComponent},
   {path:'product',component:DisplayproductComponent},
