@@ -9,6 +9,8 @@ Wandering Trader is a store for all to find and buy products from all over the w
 - Entity Framework
 - Angular
 - SQL server
+- Xunit
+- Jasmine
 
 
 ## MVP
