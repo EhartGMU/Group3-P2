@@ -59,6 +59,11 @@ namespace P2_Store.Controllers
                 if(comp == false)
                 {
                 y = x.FirstOrDefault(x => x.IsCompleted == 0);
+                    if(y == null)
+                    {
+                        y = _repo.AddOrder(id);
+                        return Ok(y);
+                    }
                     return Ok(y);
                 }
                 else
@@ -70,7 +75,7 @@ namespace P2_Store.Controllers
 
             catch
             {
-                return NotFou("It does not exist");
+                return NotFound("It does not exist");
             }
         }
 /*        // POST api/<OrderController>

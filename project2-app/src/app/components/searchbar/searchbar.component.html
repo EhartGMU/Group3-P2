@@ -14,23 +14,22 @@
       <li>
         <button routerLink="order"> Order</button>
       </li>
-      <li *ngIf="!userService.user$ | async as user">
-        <button (click)="openSignUpModal()">Sign Up</button>
+      <li *ngIf="userService.user$ | async as user; else noUser">
+      <button (click)="signOut()"> Sign Out</button>
       </li>
+      <ng-template #noUser>
+        <li>
+          <button (click)="openSignUpModal()">Sign Up</button>
+        </li>
 
-      <li>
-        <button (click)="openSignInModal()"> Sign In </button>
-      </li>
+        <li>
+          <button (click)="openSignInModal()"> Sign In </button>
+        </li>
+      </ng-template>
       <li *ngIf="userService.user$ | async as user">
-        <h2>{{user.fullName}}</h2>
-        <button (click)="signOut()"> Sign Out</button>
+        <h2>       Welcome {{user.fullName}}</h2>
       </li>
-      <li *ngIf="!userService.user$ | async as user">
-        hihihihihi
-      </li>
-
     </ul>
-
   </div>
 </div>
 

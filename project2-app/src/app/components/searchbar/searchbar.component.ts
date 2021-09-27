@@ -36,7 +36,9 @@ export class SearchbarComponent implements OnInit {
     });
   }
 
-
+  signOut() {
+    this.userService.logOut();
+  } 
   openSignUpModal() {
 
     this.ActivateSignupComp = true;

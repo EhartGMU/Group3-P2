@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { SharedService } from 'src/app/shared.service';
 import { Product } from '../interfaces/product';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -45,26 +45,27 @@ export class ProductsComponent implements OnInit {
 
     });
   }
-
+  
   onSubmit(dataItem: Inventory) {
 
     console.log(dataItem);
     this.userService.user$.subscribe(user => {
-      console.log(user);
-      this.service.GetUserOrder(user.id).subscribe(order => {
-        console.log(order);
-        const product: Product = {
-          name: dataItem.name,
-          price: dataItem.price,
-          quantity: 1,
-          inventoryId: dataItem.id,
-          orderId: order.id
-        };
-        this.service.addProduct(product).subscribe(
-          res => {
-            alert("Category  successfully added!");
-          });
-      })
+      if (user) {
+        this.service.GetUserOrder(user.id).subscribe(order => {
+          console.log(order);
+          const product: Product = {
+            name: dataItem.name,
+            price: dataItem.price,
+            quantity: 1,
+            inventoryId: dataItem.id,
+            orderId: order.id
+          };
+          this.service.addProduct(product).subscribe(
+            res => {
+              alert("Category  successfully added!");
+            });
+        })
+      }
     })
   }
 }

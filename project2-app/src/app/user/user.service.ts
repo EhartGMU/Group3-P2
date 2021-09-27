@@ -1,18 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { User } from '../components/interfaces/user';
 import { SharedService } from '../shared.service';
-import { shareReplay } from 'rxjs/operators'
+import { filter, shareReplay } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private userSubject: Subject<User> = new Subject();
-  user$: Observable<User> = this.userSubject.asObservable().pipe(shareReplay());
+  private userSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
+  user$: Observable<User | null> = this.userSubject.asObservable().pipe(shareReplay());
 
-  constructor(private sharedService: SharedService) { }
+  constructor(private sharedService: SharedService) {
+  }
+
+  init(): void {
+    const serializedUser: string | null = localStorage.getItem('user');
+    if (serializedUser) {
+      const localUser: User = JSON.parse(serializedUser)
+      this.userSubject.next(localUser);
+    }
+  }
 
 
   logIn(email: string, pass: string) {
@@ -21,15 +30,17 @@ export class UserService {
       pass
 
     }).subscribe(user => {
+      console.log(user);
       this.userSubject.next(user);
-      
-    })
+      localStorage.setItem('user', JSON.stringify(user))
+
+    });
   }
   logOut() {
-    this.userSubject.next(undefined);
+    this.userSubject.next(null);
+    localStorage.clear();
   }
 }
-
 
 export interface LogInRequest {
   email: string;
