@@ -4,6 +4,7 @@ import { SharedService } from 'src/app/shared.service';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { SignupComponent } from './signup.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
@@ -17,7 +18,7 @@ describe('SignupComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ SignupComponent ],
-      imports: [ CommonModule ],
+      imports: [ CommonModule, ReactiveFormsModule, FormsModule  ],
       providers: [ {provide:HttpClient, useValue: { get: () => null }}, { provide: SharedService, useValue: fakeSvc } ]
     })
     .compileComponents();
