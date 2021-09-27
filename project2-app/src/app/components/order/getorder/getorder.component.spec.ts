@@ -4,6 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
 import { SharedService } from 'src/app/shared.service';
 import { GetorderComponent } from './getorder.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('GetorderComponent', () => {
   let component: GetorderComponent;
@@ -16,7 +17,7 @@ describe('GetorderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GetorderComponent ],
+      declarations: [ GetorderComponent, ReactiveFormsModule, FormsModule ],
       imports: [ CommonModule ],
       providers: [ {provide:HttpClient, useValue: { get: () => null }}, { provide: SharedService, useValue: fakeSvc } ]
     })
